@@ -1,34 +1,33 @@
-import { useEffect } from 'react';
-import { useState } from 'react'
-import {BrowserRouter, NavLink, Routes, Route} from 'react-router-dom';
-import './App.css'
-import { UidContext } from './components/AppContext';
-import Header from './components/Header/Header';
-import Home from './components/Home/Home';
+import { useEffect } from "react";
+import { BrowserRouter, NavLink, Routes, Route } from "react-router-dom";
+import "./App.css";
+// import { UidContext } from "./components/AppContext";
+import Header from "./components/Header/Header";
+import Home from "./components/Home/Home";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserToken } from "./features/userSlice";
 
 function App() {
-
-  const [uid, setUid] = useState(null);
+  
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const getToken = () => {
       let token = localStorage.getItem("token");
-      setUid(token);
-    }
+      dispatch(setUserToken(token))
+    };
     getToken();
-    console.log(uid);
-  },[uid])
+  }, []);
 
   return (
-    <UidContext.Provider value={uid}>
-    <BrowserRouter>
-    <div className="App">
-      <Header/>
-    <Home />
-    </div>
-    </BrowserRouter>
-    </UidContext.Provider>
-  )
+      <BrowserRouter>
+        <div className="App">
+          <Header />
+          <Home />
+        </div>
+      </BrowserRouter>
+  );
 }
 
-export default App
+export default App;

@@ -1,24 +1,28 @@
 import { useContext } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { UidContext } from "../AppContext";
+import { useDispatch, useSelector } from "react-redux";
+import { resetUser } from '../../features/userSlice';
 
 import "./Header.css";
 
 const Header = () => {
-  const uid = useContext(UidContext);
+
+  const dispatch = useDispatch();
+  const userToken = useSelector(state => state.user.token);
 
   const logout = () => {
     localStorage.removeItem("token");
+    dispatch(resetUser)
     location.reload();
   };
 
-  
+
   return (
     <div className="header">
-      <div className="logo_intra">Intranet</div>
+      <div className="header-logo">Intranet</div>
 
-      {uid ? (
+      {userToken ? (
         <>
           <button className="header-btn">Liste</button>
           <div>*image profil*</div>

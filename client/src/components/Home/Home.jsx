@@ -3,10 +3,16 @@ import { useState } from 'react';
 import axios from 'axios';
 
 import "./Home.css";
+import { useDispatch, useSelector, useStore } from 'react-redux';
+import { setUser, setUserToken } from '../../features/userSlice';
+
 
 const Home = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+
+    const dispatch = useDispatch();
+
 
     const handleLogin = (e) => {
         e.preventDefault();
@@ -19,19 +25,31 @@ const Home = () => {
             }
         })
         .then((res) => {
+            console.log(res)
             const {success} = res.data
             console.log(success);
             try {
-                localStorage.setItem('token', res.data.token)
+                localStorage.setItem('token', res.data.token);
+
+            dispatch(setUserToken(res.data.token));
+            dispatch(setUser(res.data.user));
+            // redirection 1...
             }  catch {
                 console.log('raté')
             }
-            window.location ='/'; /* Mettre la localisation de la route pour affichage de la page random*/
+
+            //window.location ='/lili'; /* Mettre la localisation de la route pour affichage de la page random*/
         })
         .catch((err) => {
             console.log(err);
         })
     }
+
+    const store = useSelector(state => state);
+
+
+
+    
     return (
         <div className='login-container'>
             <div className='login-header'>
