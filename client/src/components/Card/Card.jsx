@@ -42,17 +42,17 @@ const Card = ({ props }) => {
                     <span style={{ fontStyle: "italic", }}>{getAge()}</span>   </div>
 
                 <div className='card_line'>
-                    <i class="fa-solid fa-envelope"></i>
+                    <i className="fa-solid fa-envelope"></i>
                     {props.email}
                 </div>
 
                 <div className='card_line'>
-                    <i class="fa-solid fa-phone-flip"></i>
+                    <i className="fa-solid fa-phone-flip"></i>
                     {props.phone}
                 </div>
 
                 <div className='card_line'>
-                    <i class="fa-solid fa-cake-candles"></i>
+                    <i className="fa-solid fa-cake-candles"></i>
                     {props.birthdate}
                 </div>
 
