@@ -5,70 +5,20 @@ import axios from 'axios';
 import "./Home.css";
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import { setUser, setUserToken } from '../../features/userSlice';
+import SignInForm from '../SignInForm/SignInForm';
 
 
 const Home = () => {
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-
-    const dispatch = useDispatch();
-
-
-    const handleLogin = (e) => {
-        e.preventDefault();
-        axios({
-            method: "post",
-            url: `http://localhost:9000/api/login`,
-            data: {
-                email,
-                password
-            }
-        })
-        .then((res) => {
-            console.log(res)
-            const {success} = res.data
-            console.log(success);
-            try {
-                localStorage.setItem('token', res.data.token);
-
-            dispatch(setUserToken(res.data.token));
-            dispatch(setUser(res.data.user));
-            // redirection 1...
-            }  catch {
-                console.log('raté')
-            }
-
-            //window.location ='/lili'; /* Mettre la localisation de la route pour affichage de la page random*/
-        })
-        .catch((err) => {
-            console.log(err);
-        })
-    }
-
-    const store = useSelector(state => state);
-
-
-
-    
+    const isLogged = useSelector(state => state.user.token)
     return (
-        <div className='login-container'>
-            <div className='login-header'>
-                <h1>Connexion</h1>
-                <div className='line'></div>
-                <p>Pour vous connecter à l'intranet, entrez votre identifiant et mot de passe</p>
-            </div>
-           <form action="" onSubmit={handleLogin}>
-            <div className='input-container'>
-                <label htmlFor='email'>Email</label>
-                <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
-            </div>
-            <div className='input-container'>
-                <label htmlFor='password'>Mot de passe</label>
-                <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
-            </div>
-            <input type="submit" className='form-btn' value="Connexion"/>
-            </form>
-        </div>
+        <>
+        {isLogged ? (
+            <h2>Connecté</h2>
+        ) : (
+            <SignInForm/>
+        )}
+        
+        </>
     );
 };
 

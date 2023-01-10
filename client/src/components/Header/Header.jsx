@@ -2,21 +2,20 @@ import { useContext } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { resetUser } from '../../features/userSlice';
+import { resetUser } from "../../features/userSlice";
 
 import "./Header.css";
 
 const Header = () => {
-
   const dispatch = useDispatch();
-  const userToken = useSelector(state => state.user.token);
+  const userToken = useSelector((state) => state.user.token);
+  const connectedUserData = useSelector((state) => state.user.user);
 
   const logout = () => {
     localStorage.removeItem("token");
-    dispatch(resetUser)
+    dispatch(resetUser);
     location.reload();
   };
-
 
   return (
     <div className="header">
@@ -29,7 +28,9 @@ const Header = () => {
           <button className="header-btn">
             <i className="fa-solid fa-list"></i>
             Liste</button>
-          <div>*image profil*</div>
+          <div className="header-img">
+            <img src={connectedUserData.photo} alt="" />
+          </div>
           <button className="header-btn" onClick={logout}>
             <i className="fa-solid fa-right-from-bracket"></i>
             Déconnexion
