@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API</title>
+
+	<link rel='stylesheet' href='/global.css'>
+
+  <link rel="stylesheet" href="/highlightjs/default.min.css">
+  <script defer src="/highlightjs/highlight.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('pre > code[class^=language]').forEach(codeEl => {
+        const content = codeEl.textContent;
+        const lines = content.split('\n').filter((line, i, arr) => ![0, arr.length-1].includes(i) || line.trim() !== '');
+        const sliceLength = lines[0].length - lines[0].trimLeft().length;
+        const newContent = lines.map(line => line.slice(sliceLength)).join('\n');
+        codeEl.textContent = newContent;
+      });
+      hljs.highlightAll();
+    });
+  </script>
+
+</head>
+<body class="container">
+  <h1>API Collaborateurs <small>(Documentation)</small></h1>
+
+  <p>URL du serveur : <code>http://localhost:{APP_PORT}</code></p>
+
+  <hr>
+
+  <h2>Routes disponibles</h2>
+
+  <h3>Login</h3>
+
+  <ul>
+    <li>
+      <a href="#login"><code><strong>POST</strong> /api/login</code></a> :
+      Connecte un utilisateur et renvoie un token d'authentification
+    </li>
+  </ul>
+
+  <h3>Collaborateurs (utilisateurs authentifiés avec JSON Web Token)</h3>
+  
+  <ul>
+    <li>
+      <a href="#getall"><code><strong>GET</strong> /api/collaborateurs</code></a> :
+      Récupérer la liste des collaborateurs
+    </li>
+    <li>
+      <a href="#getrandom"><code><strong>GET</strong> /api/collaborateurs/random</code></a> :
+      Récupérer un collaborateur au hasard
+    </li>
+    <li>
+      <a href="#getbyid"><code><strong>GET</strong> /api/collaborateurs/{id}</code></a> :
+      Récupérer un collaborateur via son identifiant
+    </li>
+  </ul>
+
+  <h3>Collaborateurs (administrateurs authentifiés avec JSON Web Token)</h3>
+
+  <ul>
+    <li>
+      <a href="#add"><code><strong>POST</strong> /api/collaborateurs</code></a> :
+      Créer un nouveau collaborateur
+    </li>
+    <li>
+      <a href="#update"><code><strong>PUT</strong> /api/collaborateurs/{id}</code></a> :
+      Modifie un collaborateur via son identifiant
+    </li>
+    <li>
+      <a href="#delete"><code><strong>DELETE</strong> /api/collaborateurs/{id}</code></a> :
+      Supprime un collaborateur via son identifiant
+    </li>
+  </ul>
+
+  <hr>
+
+  <!-- ======================================================================= -->
+
+  <h1 id="login">
+    <code><strong>POST</strong> /api/login</code>
+  </h1>
+
+  <p>Authentifie un utilisateur via email et mot de passe.</p>
+  <p>Si les identifiants sont valides, un token d'authentification est renvoyé avec les informations de l'utilisateur.</p>
+
+  <strong>Format de la requête HTTP :</strong>
+
+  <pre><code class="language-bash">
+    POST /api/login HTTP/1.1
+    Content-Type: application/json
+    
+    {
+      "email": "owen.lopez@example.com",
+      "password": "owen.lopez"
+    }
+  </code></pre>
+
+  <strong>Format de la réponse HTTP :</strong>
+  
+  <pre><code class="language-bash">
+    {
+      "success": "Succès de l'authentification",
+      "token":
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJnZW5kZXIiOiJtYWxlIiwiZmlyc3RuYW1lIjoiT3dlbiIsImxhc3RuYW1lIjoiTG9wZXoiLCJlbWFpbCI6Im93ZW4ubG9wZXpAZXhhbXBsZS5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCRJRXhRQlhFWlZpZnZmRU9XdldzbU8uNC5Pb2NOYjd6UXp1clFlcndPUWgxdFp4LzNva1NwLiIsInBob25lIjoiMDItMzctNzktNzgtMzkiLCJiaXJ0aGRhdGUiOiIxOTkyLTEyLTI2IiwiY2l0eSI6IlZpbGxldXJiYW5uZSIsImNvdW50cnkiOiJGcmFuY2UiLCJwaG90byI6Imh0dHBzOi8vcmFuZG9tdXNlci5tZS9hcGkvcG9ydHJhaXRzL21lbi80MC5qcGciLCJzZXJ2aWNlIjoiTWFya2V0aW5nIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTY2Mjc0NTQ5NX0.DjeLsDdSmz5omvBM5z8e90nMF4uo6XpWBnatWDyIHH8",
+      "user": {
+        "id": "1",
+        "gender": "male",
+        "firstname": "Owen",
+        "lastname": "Lopez",
+        "email": "owen.lopez@example.com",
+        "phone": "02-37-79-78-39",
+        "birthdate": "1992-12-26",
+        "city": "Villeurbanne",
+        "country": "France",
+        "photo": "https://randomuser.me/api/portraits/men/40.jpg",
+        "service": "Marketing",
+        "isAdmin": false
+      }
+    }
+  </code></pre>
+
+  <!-- ======================================================================= -->
+
+  <h1 id="getall">
+    <code><strong>GET</strong> /api/collaborateurs</code>
+  </h1>
+
+  <p>Récupère la liste des collaborateurs</p>
+  <p>Cette route nécessite la présence d'un token valide.</p>
+
+  <strong>Format de la requête HTTP :</strong>
+
+  <pre><code class="language-bash">
+    GET /api/collaborateurs HTTP/1.1
+    Authorization: Bearer &lt;token&gt;
+  </code></pre>
+
+  <strong>Format de la réponse HTTP :</strong>
+  
+  <pre><code class="language-bash">
+    [
+      {
+          "id": "1",
+          "gender": "male",
+          "firstname": "Owen",
+          "lastname": "Lopez",
+          "email": "owen.lopez@example.com",
+          "phone": "02-37-79-78-39",
+          "birthdate": "1992-12-26",
+          "city": "Villeurbanne",
+          "country": "France",
+          "photo": "https://randomuser.me/api/portraits/men/40.jpg",
+          "service": "Marketing"
+      },
+      // … etc
+    ]
+  </code></pre>
+
+  <!-- ======================================================================= -->
+
+  <h1 id="getrandom">
+    <code><strong>GET</strong> /api/collaborateurs/random</code>
+  </h1>
+
+  <p>Récupère un collaborateur au hasard.</p>
+  <p>Cette route nécessite la présence d'un token valide.</p>
+
+  <strong>Format de la requête HTTP :</strong>
+
+  <pre><code class="language-bash">
+    GET /api/collaborateurs/random HTTP/1.1
+    Authorization: Bearer &lt;token&gt;
+  </code></pre>
+
+  <strong>Format de la réponse HTTP :</strong>
+
+  <pre><code class="language-bash">
+    {
+      "id": "37",
+      "gender": "male",
+      "firstname": "Isaac",
+      "lastname": "Renard",
+      "email": "isaac.renard@example.com",
+      "phone": "05-49-13-09-86",
+      "birthdate": "1991-09-17",
+      "city": "Angers",
+      "country": "France",
+      "photo": "https://randomuser.me/api/portraits/men/84.jpg",
+      "service": "Marketing"
+    }
+  </code></pre>
+
+  <!-- ======================================================================= -->
+
+  <h1 id="getbyid">
+    <code><strong>GET</strong> /api/collaborateurs/{id}</code>
+  </h1>
+
+  <p>Récupère un collaborateur via son identifiant.</p>
+  <p>Cette route nécessite la présence d'un token valide.</p>
+
+  <strong>Format de la requête HTTP :</strong>
+
+  <pre><code class="language-bash">
+    GET /api/collaborateurs/12 HTTP/1.1
+    Authorization: Bearer &lt;token&gt;
+  </code></pre>
+
+  <strong>Format de la réponse HTTP :</strong>
+
+  <pre><code class="language-bash">
+    {
+      "id": "12",
+      "gender": "female",
+      "firstname": "Marine",
+      "lastname": "Marchand",
+      "email": "marine.marchand@example.com",
+      "phone": "04-46-14-99-58",
+      "birthdate": "1992-04-21",
+      "city": "Reims",
+      "country": "France",
+      "photo": "https://randomuser.me/api/portraits/women/56.jpg",
+      "service": "Client"
+    }
+  </code></pre>
+
+  <!-- ======================================================================= -->
+
+  <h1 id="add">
+    <code><strong>POST</strong> /api/collaborateurs</code>
+  </h1>
+
+  <p>Ajoute un nouveau collaborateur en base.</p>
+  <p>Cette route nécessite la présence d'un token <ins>administrateur</ins> valide.</p>
+
+  <strong>Format de la requête HTTP :</strong>
+
+  <pre><code class="language-bash">
+    POST /api/collaborateurs HTTP/1.1
+    Content-Type: application/json
+    Authorization: Bearer &lt;admin token&gt;
+    
+    {
+      "gender": "male",
+      "firstname": "Julien",
+      "lastname": "Martin",
+      "password": "jmarti230908",
+      "email": "julien.martin@example.com",
+      "phone": "04-46-14-99-39",
+      "birthdate": "1991-04-21",
+      "city": "Romainville",
+      "country": "France",
+      "photo": "https://randomuser.me/api/portraits/men/64.jpg",
+      "service": "Client"
+    }
+  </code></pre>
+
+  <strong>Format de la réponse HTTP :</strong>
+
+  <pre><code class="language-bash">
+    {
+      "success": "Collaborateur ajouté",
+      "collaborateur": {
+        "gender": "male",
+        "firstname": "Julien",
+        "lastname": "Martin",
+        "email": "julien.martin@example.com",
+        "phone": "04-46-14-99-39",
+        "birthdate": "1991-04-21",
+        "city": "Romainville",
+        "country": "France",
+        "photo": "https://randomuser.me/api/portraits/men/64.jpg",
+        "service": "Client",
+        "id": 43
+      }
+    }    
+  </code></pre>
+  
+  <!-- ======================================================================= -->
+
+  <h1 id="update">
+    <code><strong>PUT</strong> /api/collaborateurs/{id}</code>
+  </h1>
+
+  <p>Modifie en base les données d'un collaborateur.</p>
+  <p>Cette route nécessite la présence d'un token contenant le même {id} que la ressource à modifier, ou un token <ins>administrateur</ins> valide.<br>
+  (en effet, un utilisateur à le droit de modifier ses propres informations)</p>
+
+  <strong>Format de la requête HTTP :</strong>
+
+  <pre><code class="language-bash">
+    PUT /api/collaborateurs/23 HTTP/1.1
+    Authorization: Bearer &lt;admin token | user token with id 23&gt;
+    Content-Type: application/json
+
+    {
+      "gender": "female",
+      "firstname": "Morgane",
+      "lastname": "Roy",
+      "email": "morgane.roy@example.com",
+      "password": "abcde", // Facultatif : Uniquement si le mot de passe doit être changé
+      "phone": "03-30-98-59-90",
+      "birthdate": "1987-08-11",
+      "city": "Toulon",
+      "country": "France",
+      "photo": "https://randomuser.me/api/portraits/women/91.jpg",
+      "service": "Client"
+    }
+  </code></pre>
+
+  <strong>Format de la réponse HTTP :</strong>
+
+  <pre><code class="language-bash">
+    {
+      "success": "Collaborateur modifié",
+      "collaborateur": {
+          "gender": "female",
+          "firstname": "Morgane",
+          "lastname": "Roy",
+          "email": "morgane.roy@example.com",
+          "phone": "03-30-98-59-90",
+          "birthdate": "1987-08-11",
+          "city": "Toulon",
+          "country": "France",
+          "photo": "https://randomuser.me/api/portraits/women/91.jpg",
+          "service": "Client",
+          "id": "23"
+      }
+    }
+  </code></pre>
+  
+  <!-- ======================================================================= -->
+
+  <h1 id="delete">
+    <code><strong>DELETE</strong> /api/collaborateurs/{id}</code>
+  </h1>
+
+  <p>Supprime un collaborateur via son identifiant.</p>
+  <p>Cette route nécessite la présence d'un token <ins>administrateur</ins> valide.</p>
+
+  <strong>Format de la requête HTTP :</strong>
+
+  <pre><code class="language-bash">
+    DELETE /api/collaborateurs/41 HTTP/1.1
+    Authorization: Bearer &lt;admin token&gt;
+    Content-Type: application/json
+  </code></pre>
+
+  <strong>Format de la réponse HTTP :</strong>
+
+  <pre><code class="language-bash">
+    {
+      "success": "Collaborateur supprimé",
+      "collaborateur": {
+          "id": "41",
+          "gender": "male",
+          "firstname": "Quentin",
+          "lastname": "Roger",
+          "email": "quentin.roger@example.com",
+          "phone": "04-05-29-42-43",
+          "birthdate": "1985-12-11",
+          "city": "Saint-pierre",
+          "country": "France",
+          "photo": "https://randomuser.me/api/portraits/men/52.jpg",
+          "service": "Technique",
+          "isAdmin": false
+      }
+    }
+  </code></pre>
+
+
+</body>
+</html>

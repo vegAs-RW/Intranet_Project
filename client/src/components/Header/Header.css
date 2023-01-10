@@ -1,0 +1,21 @@
+.header {
+    display: flex;
+    justify-content: end;
+    background-color: red;
+    width: 100%;
+    height: 50px;
+    align-items: center;
+  
+  }
+  
+  .logo_intra {
+    position: absolute;
+    left: 1rem;
+  
+    /* justify-self: flex-start; */
+  }
+  .header-btn {
+    background-color: black;
+    margin: 20px ;
+    padding: 1rem 1rem;
+  }
