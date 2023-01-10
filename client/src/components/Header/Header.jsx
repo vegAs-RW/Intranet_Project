@@ -13,6 +13,7 @@ const Header = () => {
     location.reload();
   };
 
+  
   return (
     <div className="header">
       <div className="logo_intra">Intranet</div>
