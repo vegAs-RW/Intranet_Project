@@ -45,18 +45,6 @@ function App() {
 
       <p>Avez vous dis bonjour à:</p>
 
-      liste
-      <i class="fa-solid fa-list"></i>
-
-      intranet
-      <i class="fa-solid fa-network-wired"></i>
-
-      log in
-      <i class="fa-solid fa-right-to-bracket"></i>
-
-      log out
-      <i class="fa-solid fa-right-from-bracket"></i>
-
       calendar
       <i class="fa-regular fa-calendar"></i>
       <br></br>
