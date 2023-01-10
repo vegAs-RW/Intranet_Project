@@ -1,0 +1,24 @@
+.card {
+  display: flex;
+  justify-content: center;
+  background-color: rgb(255, 254, 244);
+  width: fit-content;
+  height: 100%;
+  font-size: small;
+
+}
+
+.card_right {
+  position: relative;
+  padding: 1rem;
+}
+
+.card_service {
+  background-color: blue;
+  color: azure;
+  font-size: smaller;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0 0.5rem
+}
