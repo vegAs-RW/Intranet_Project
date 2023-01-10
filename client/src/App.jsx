@@ -1,10 +1,8 @@
 import { useEffect } from "react";
 import { BrowserRouter, NavLink, Routes, Route } from "react-router-dom";
 import "./App.css";
-// import { UidContext } from "./components/AppContext";
 import Header from "./components/Header/Header";
 import Home from "./components/Home/Home";
-import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserToken } from "./features/userSlice";
 
