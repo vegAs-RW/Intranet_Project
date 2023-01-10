@@ -20,18 +20,25 @@ const Header = () => {
 
   return (
     <div className="header">
-      <div className="header-logo">Intranet</div>
+      <div className="logo_intra">
+        <i class="fa-solid fa-network-wired"></i>
+        Intranet</div>
 
       {userToken ? (
         <>
-          <button className="header-btn">Liste</button>
+          <button className="header-btn">
+            <i class="fa-solid fa-list"></i>
+            Liste</button>
           <div>*image profil*</div>
           <button className="header-btn" onClick={logout}>
+            <i class="fa-solid fa-right-from-bracket"></i>
             Déconnexion
           </button>
         </>
       ) : (
-        <button className="header-btn">Connexion</button>
+        <button className="header-btn">
+          <i class="fa-solid fa-right-to-bracket"></i>
+          Connexion</button>
       )}
     </div>
   );
