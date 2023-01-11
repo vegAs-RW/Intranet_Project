@@ -6,7 +6,6 @@ import "./welcome.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { setRandomUser, setAllUser } from "../../features/userSlice";
-import { setRandomUser, setAllUser } from "../../features/userSlice";
 
 const Welcome = () => {
   const dispatch = useDispatch();
@@ -42,42 +41,61 @@ const Welcome = () => {
       })
       .catch((err) => console.log(err));
   };
+  // Requete API pour stocker dans le store la data de tous les utilisateurs
+  const getAllUser = async () => {
+    await axios({
+      method: "get",
+      url: `http://localhost:9000/api/collaborateurs`,
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+      },
+    })
+      .then((res) => {
+        dispatch(setAllUser(res.data));
+      })
+      .catch((err) => console.log(err));
+  };
 
+  // Appel des fonctions de requete API dans le hook
   // Appel des fonctions de requete API dans le hook
   useEffect(() => {
     getRandomUser();
     getAllUser();
+    getAllUser();
     console.log(randomUser);
   }, []);
+}, []);
 
-  return (
-    <>
-      <h1> Bienvenue sur l'intranet</h1>
-      <p>
-        la platforme de l'entreprise qui vous permet de retrouver tous vos
-        collaborateurs{" "}
-      </p>
-      <p>Avez vous dis bonjour à:</p>
-      calendar
-      <br></br>
-      {/* <FontAwesomeIcon icon="fa-solid fa-cake-candles" /> */}
-      {randomUser && (
-        <Card
-          lastname={randomUser.lastname}
-          firstname={randomUser.firstname}
-          birthdate={randomUser.birthdate}
-          city={randomUser.city}
-          country={randomUser.country}
-          photo={randomUser.photo}
-          email={randomUser.email}
-          phone={randomUser.phone}
-          service={randomUser.service}
-          isEditBtn={false}
-        />
-      )}
-      <button onClick={getRandomUser}>DIRE BONJOUR A QUELQU'UN D'AUTRE</button>
-    </>
-  );
+return (
+  <>
+    <h1> Bienvenue sur l'intranet</h1>
+    <p>
+      la platforme de l'entreprise qui vous permet de retrouver tous vos
+      collaborateurs{" "}
+    </p>
+    <p>Avez vous dis bonjour à:</p>
+    calendar
+    <br></br>
+    {/* <FontAwesomeIcon icon="fa-solid fa-cake-candles" /> */}
+    {randomUser && (
+      <Card
+        lastname={randomUser.lastname}
+        firstname={randomUser.firstname}
+        birthdate={randomUser.birthdate}
+        city={randomUser.city}
+        country={randomUser.country}
+        photo={randomUser.photo}
+        email={randomUser.email}
+        phone={randomUser.phone}
+        service={randomUser.service}
+        isEditBtn={false}
+        isEditBtn={false}
+      />
+    )}
+    <button onClick={getRandomUser}>DIRE BONJOUR A QUELQU'UN D'AUTRE</button>
+    <button onClick={getRandomUser}>DIRE BONJOUR A QUELQU'UN D'AUTRE</button>
+  </>
+);
 };
 
 export default Welcome;
