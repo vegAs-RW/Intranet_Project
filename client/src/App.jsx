@@ -13,7 +13,7 @@ import Welcome from './components/Welcome/Welcome';
 
 function App() {
 
-  const dispatch = useDispatch();
+  /*const dispatch = useDispatch();
 
   useEffect(() => {
     const getToken = () => {
@@ -21,14 +21,14 @@ function App() {
       dispatch(setUserToken(token))
     };
     getToken();
-  }, []);
+  }, []);*/
 
   return (
     <BrowserRouter>
       <div className="App">
         <Header />
         <Home />
-        < Welcome />
+        
       </div>
     </BrowserRouter>
 
