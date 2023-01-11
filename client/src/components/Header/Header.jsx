@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { resetUser } from "../../features/userSlice";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 import "./Header.css";
 
@@ -38,8 +38,10 @@ const Header = () => {
 
           <Link to="/edit">
             <div className="header-img">
-              {connectedUserData && (
-                <img src={connectedUserData.photo} alt="" />
+              {connectedUserData && connectedUserData.photo ? (
+                <img src={connectedUserData.photo} alt="photo de profil" />
+              ) : (
+                <img src="/istockphoto-1008665336-170667a.jpeg" alt="avatar vierge" />
               )}
             </div>
           </Link>
