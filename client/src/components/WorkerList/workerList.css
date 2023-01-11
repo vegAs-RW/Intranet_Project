@@ -1,0 +1,23 @@
+.user_table {
+
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin: 1rem;
+
+}
+
+.user_table_card {
+    margin: 1rem;
+}
+
+.filter-container {
+    display: flex;
+    /* justify-content: space-around; */
+    margin: 2rem;
+}
+
+.filter-input {
+
+    margin: 0.5rem;
+}

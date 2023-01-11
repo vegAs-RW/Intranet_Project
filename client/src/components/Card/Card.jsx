@@ -7,6 +7,8 @@ const Card = ({
   lastname,
   firstname,
   birthdate,
+  city,
+  country,
   photo,
   email,
   phone,
@@ -24,6 +26,15 @@ const Card = ({
     );
   };
 
+
+  const getServicesColor = () => {
+    if (service == "Marketing") { return { backgroundColor: "palevioletred" } }
+    if (service == "Client") { return { backgroundColor: "green" } }
+    if (service == "Technique") { return { backgroundColor: "blue" } }
+
+  }
+
+
   return (
     <div className="card">
       <img style={{ height: "100%" }} src={photo}></img>
@@ -31,8 +42,12 @@ const Card = ({
       <div className="card_right">
         <div>
           {" "}
-          {firstname + " " + lastname} {}
+          {firstname + " " + lastname} { }
           <span style={{ fontStyle: "italic" }}>{getAge()}</span>{" "}
+        </div>
+
+        <div>
+          {city + ", " + country} { }
         </div>
 
         <div className="card_line">
@@ -50,7 +65,10 @@ const Card = ({
           {birthdate}
         </div>
 
-        <div className="card_service">{service.toUpperCase()}</div>
+        <div className="card_service"
+          style={getServicesColor()}
+
+        >{service.toUpperCase()}</div>
       </div>
     </div>
   );

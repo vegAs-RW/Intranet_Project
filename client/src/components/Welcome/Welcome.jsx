@@ -1,17 +1,18 @@
 import React from "react";
 import axios from "axios";
-
 import Card from "../Card/Card";
 
 import "./welcome.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { setRandomUser } from "../../features/userSlice";
+import { setRandomUser, setAllUser } from "../../features/userSlice";
 
 const Welcome = () => {
   const dispatch = useDispatch();
   const userToken = useSelector((state) => state.user.token);
   const randomUser = useSelector((state) => state.user.randomUser);
+  const allUser = useSelector((state) => state.user.allUser);
+
   const getRandomUser = async () => {
     await axios({
       method: "get",
@@ -26,10 +27,26 @@ const Welcome = () => {
       .catch((err) => console.log(err));
   };
 
+  const getAllUser = async () => {
+    await axios({
+      method: "get",
+      url: `http://localhost:9000/api/collaborateurs`,
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+      },
+    })
+      .then((res) => {
+        dispatch(setAllUser(res.data));
+      })
+      .catch((err) => console.log(err));
+  };
+
   useEffect(() => {
     getRandomUser();
-    console.log(randomUser);
+    getAllUser();
+    console.log(allUser);
   }, [userToken]);
+
 
   return (
     <>
@@ -40,7 +57,6 @@ const Welcome = () => {
       </p>
       <p>Avez vous dis bonjour à:</p>
       calendar
-      <i className="fa-regular fa-calendar"></i>
       <br></br>
       {/* <FontAwesomeIcon icon="fa-solid fa-cake-candles" /> */}
       {randomUser && (
@@ -48,6 +64,8 @@ const Welcome = () => {
           lastname={randomUser.lastname}
           firstname={randomUser.firstname}
           birthdate={randomUser.birthdate}
+          city={randomUser.city}
+          country={randomUser.country}
           photo={randomUser.photo}
           email={randomUser.email}
           phone={randomUser.phone}
