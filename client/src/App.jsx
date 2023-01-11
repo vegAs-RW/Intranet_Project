@@ -9,6 +9,7 @@ import { setUserToken } from "./features/userSlice";
 import Welcome from './components/Welcome/Welcome';
 import WorkerList from './components/WorkerList/WorkerList';
 import EditProfile from './components/EditProfile/EditProfile';
+import AddWorker from "./components/AddWorker/AddWorker";
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
           <Route path="/" element={<Home />} ></Route>
           <Route path="/worker" element={<WorkerList />} ></Route>
           <Route path="/edit" element={<EditProfile />} ></Route>
+          <Route path='/addworker' element={<AddWorker />}></Route>
           
         </Routes>
       </div>
