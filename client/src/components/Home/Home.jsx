@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import "./Home.css";
 import { useDispatch, useSelector, useStore } from 'react-redux';
-import { setUser, setUserToken, setRandomUser } from '../../features/userSlice';
+import { setUser, setUserToken, setRandomUser, setAllUser } from '../../features/userSlice';
 import SignInForm from '../SignInForm/SignInForm';
 import Welcome from '../Welcome/Welcome'
 
