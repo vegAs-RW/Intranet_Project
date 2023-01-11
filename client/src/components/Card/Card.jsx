@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-
+import axios from "axios";
 import "./card.css";
 
 const Card = ({
@@ -11,18 +11,41 @@ const Card = ({
   email,
   phone,
   service,
+  isEditBtn
 }) => {
 
+  // Récupération du store user
+  const connectedUserData = useSelector((state) => state.user.user);
+  const userData = useSelector((state) => state.user.allUser)
+  // Appel du store contenant le token de l'utilisateur connecté
+  const userToken = useSelector((state) => state.user.token);
+  const randomUserData = useSelector((state) => state.user.randomUser)
+  
+  // Fonction pour afficher l'age
   const getAge = () => {
     let now = new Date().getTime();
     let birthday = new Date(birthdate).getTime();
-
     return (
       "(" +
       Math.ceil((now - birthday) / (1000 * 60 * 60 * 24 * 365.25)) +
       " ans)"
     );
   };
+
+  // Fonction pour que l'admin puisse supprimer un user
+  const deleteUser = () => {
+    axios({
+      method: "delete",
+      url: `http://localhost:9000/api/collaborateurs/${randomUserData.id}`,
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+      },
+    })
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => console.log(err))
+  }
 
   return (
     <div className="card">
@@ -51,6 +74,12 @@ const Card = ({
         </div>
 
         <div className="card_service">{service.toUpperCase()}</div>
+        {isEditBtn && (
+          <div>
+            <button className="card-btn">Modifier</button>
+            <button className="card-btn" onClick={deleteUser}>Supprimer</button>
+          </div>
+        )}
       </div>
     </div>
   );

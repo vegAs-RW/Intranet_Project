@@ -35,6 +35,14 @@ const Header = () => {
               Liste
             </button>
           </Link>
+          {connectedUserData.isAdmin && (
+            <Link to="/addworker">
+            <button className="header-btn">
+              <i className="fa-solid fa-list"></i>
+              Ajouter
+            </button>
+          </Link>
+          )}
 
           <Link to="/edit">
             <div className="header-img">
