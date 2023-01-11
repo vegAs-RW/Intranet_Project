@@ -12,7 +12,7 @@ const Header = () => {
   const connectedUserData = useSelector((state) => state.user.user);
 
   const logout = () => {
-    localStorage.removeItem("token");
+    //localStorage.removeItem("token");
     dispatch(resetUser);
     location.reload();
   };
@@ -29,7 +29,9 @@ const Header = () => {
             <i className="fa-solid fa-list"></i>
             Liste</button>
           <div className="header-img">
-            <img src={connectedUserData.photo} alt="" />
+            {connectedUserData && (
+            <img src={connectedUserData.photo} alt="" />)}
+            
           </div>
           <button className="header-btn" onClick={logout}>
             <i className="fa-solid fa-right-from-bracket"></i>

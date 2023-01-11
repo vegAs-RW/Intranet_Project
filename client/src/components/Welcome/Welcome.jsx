@@ -1,51 +1,62 @@
-import React from 'react';
-import { useState } from 'react';
-import axios from 'axios';
+import React from "react";
+import axios from "axios";
 
-import Card from '../Card/Card'
-
-
+import Card from "../Card/Card";
 
 import "./welcome.css";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { setRandomUser } from "../../features/userSlice";
 
 const Welcome = () => {
+  const dispatch = useDispatch();
+  const userToken = useSelector((state) => state.user.token);
+  const randomUser = useSelector((state) => state.user.randomUser);
+  const getRandomUser = async () => {
+    await axios({
+      method: "get",
+      url: `http://localhost:9000/api/collaborateurs/random`,
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+      },
+    })
+      .then((res) => {
+        dispatch(setRandomUser(res.data));
+      })
+      .catch((err) => console.log(err));
+  };
 
-    return (<>
+  useEffect(() => {
+    getRandomUser();
+    console.log(randomUser);
+  }, [userToken]);
 
-        <h1> Bienvenue sur l'intranet</h1>
-
-        <p>la platforme de l'entreprise qui vous permet de retrouver tous vos collaborateurs </p>
-
-        <p>Avez vous dis bonjour à:</p>
-
-        calendar
-        <i class="fa-regular fa-calendar"></i>
-        <br></br>
-
-
-        {/* <FontAwesomeIcon icon="fa-solid fa-cake-candles" /> */}
-
-
+  return (
+    <>
+      <h1> Bienvenue sur l'intranet</h1>
+      <p>
+        la platforme de l'entreprise qui vous permet de retrouver tous vos
+        collaborateurs{" "}
+      </p>
+      <p>Avez vous dis bonjour à:</p>
+      calendar
+      <i className="fa-regular fa-calendar"></i>
+      <br></br>
+      {/* <FontAwesomeIcon icon="fa-solid fa-cake-candles" /> */}
+      {randomUser && (
         <Card
-            props={
-
-                JSON.parse(
-                    '{"id": "37","gender": "male","firstname": "Isaac","lastname": "Renard","email": "isaac.renard@example.com","phone": "05-49-13-09-86",  "birthdate": "1991-09-17",      "city": "Angers",      "country": "France",      "photo": "https://randomuser.me/api/portraits/men/84.jpg",      "service": "Marketing"            }'
-                )
-
-            }
+          lastname={randomUser.lastname}
+          firstname={randomUser.firstname}
+          birthdate={randomUser.birthdate}
+          photo={randomUser.photo}
+          email={randomUser.email}
+          phone={randomUser.phone}
+          service={randomUser.service}
         />
-
-
-
-        <button>DIRE BONJOUR A QUELQU'UN D'AUTRE</button>
-
-
-
+      )}
+      <button>DIRE BONJOUR A QUELQU'UN D'AUTRE</button>
     </>
-
-    )
-}
-
+  );
+};
 
 export default Welcome;

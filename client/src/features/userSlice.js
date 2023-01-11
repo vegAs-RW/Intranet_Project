@@ -5,7 +5,8 @@ const userSlice = createSlice({
 
     initialState: {
         token: null,
-        user: null
+        user: null, 
+        randomUser: null
     },
 
     reducers: {
@@ -22,11 +23,14 @@ const userSlice = createSlice({
                 token: null,
                 user: null
             }
+        },
+        setRandomUser(state, action) {
+            state.randomUser = action.payload;
         }
     }
 });
 
-export const { setUserToken, setUser, resetUser } = userSlice.actions;
+export const { setUserToken, setUser, resetUser, setRandomUser } = userSlice.actions;
 
 export default userSlice.reducer;
 
