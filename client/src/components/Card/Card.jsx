@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import "./card.css";
+import { setAllUser } from "../../features/userSlice";
+import { useEffect } from "react";
 
 const Card = ({
   lastname,
@@ -13,7 +15,8 @@ const Card = ({
   email,
   phone,
   service,
-  isEditBtn
+  isEditBtn,
+  userId
 }) => {
 
   // Récupération du store user
@@ -22,6 +25,7 @@ const Card = ({
   // Appel du store contenant le token de l'utilisateur connecté
   const userToken = useSelector((state) => state.user.token);
   const randomUserData = useSelector((state) => state.user.randomUser)
+  const dispatch = useDispatch();
 
   // Fonction pour afficher l'age
   const getAge = () => {
@@ -38,13 +42,26 @@ const Card = ({
   const deleteUser = () => {
     axios({
       method: "delete",
-      url: `http://localhost:9000/api/collaborateurs/${randomUserData.id}`,
+      url: `http://localhost:9000/api/collaborateurs/${userId}`,
       headers: {
         Authorization: `Bearer ${userToken}`,
       },
     })
       .then((res) => {
         console.log(res);
+      })
+      .then(() => {
+        axios({
+          method: "get",
+          url: `http://localhost:9000/api/collaborateurs`,
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          dispatch(setAllUser(res.data));
+        })
       })
       .catch((err) => console.log(err))
   }
@@ -56,7 +73,6 @@ const Card = ({
     if (service == "Technique") { return { backgroundColor: "blue" } }
 
   }
-
 
   return (
     <div className="card">
