@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import axios from "axios";
 import "./card.css";
 
 const Card = ({
