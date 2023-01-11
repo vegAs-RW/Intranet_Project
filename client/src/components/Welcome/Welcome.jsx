@@ -54,7 +54,7 @@ const Welcome = () => {
           service={randomUser.service}
         />
       )}
-      <button>DIRE BONJOUR A QUELQU'UN D'AUTRE</button>
+      <button onClick={getRandomUser}>DIRE BONJOUR A QUELQU'UN D'AUTRE</button>
     </>
   );
 };
