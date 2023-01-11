@@ -8,16 +8,16 @@ import { Link } from "react-router-dom";
 import "./Header.css";
 
 const Header = () => {
-
   const dispatch = useDispatch();
-  const userToken = useSelector(state => state.user.token);
+  const userToken = useSelector((state) => state.user.token);
+  const connectedUserData = useSelector((state) => state.user.user);
+
 
   const logout = () => {
-    localStorage.removeItem("token");
-    dispatch(resetUser)
+    //localStorage.removeItem("token");
+    dispatch(resetUser);
     location.reload();
   };
-
 
   return (
     <div className="header">
@@ -44,7 +44,11 @@ const Header = () => {
             </Link>
 
             <Link to="/edit">
-              <div>*image profil*</div>
+            <div className="header-img">
+            {connectedUserData && (
+            <img src={connectedUserData.photo} alt="" />)}
+            
+          </div>
 
             </Link>
             <button className="header-btn" onClick={logout}>

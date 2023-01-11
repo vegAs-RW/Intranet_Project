@@ -16,7 +16,7 @@ import EditProfile from './components/EditProfile/EditProfile';
 
 function App() {
 
-  const dispatch = useDispatch();
+  /*const dispatch = useDispatch();
 
   useEffect(() => {
     const getToken = () => {
@@ -24,7 +24,7 @@ function App() {
       dispatch(setUserToken(token))
     };
     getToken();
-  }, []);
+  }, []);*/
 
   return (
 
