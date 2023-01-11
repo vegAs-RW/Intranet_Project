@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { resetUser } from '../../features/userSlice';
+import { Link } from "react-router-dom";
 
 import "./Header.css";
 
@@ -20,27 +21,44 @@ const Header = () => {
 
   return (
     <div className="header">
-      <div className="logo_intra">
-        <i className="fa-solid fa-network-wired"></i>
-        Intranet</div>
 
-      {userToken ? (
-        <>
+
+      <Link to="/">
+        <div className="logo_intra">
+          <i className="fa-solid fa-network-wired"></i>
+          Intranet
+        </div>
+      </Link>
+
+
+
+
+
+      {
+        userToken ? (
+          <>
+            <Link to="/worker">
+              <button className="header-btn">
+                <i className="fa-solid fa-list"></i>
+                Liste</button>
+            </Link>
+
+            <Link to="/edit">
+              <div>*image profil*</div>
+
+            </Link>
+            <button className="header-btn" onClick={logout}>
+              <i className="fa-solid fa-right-from-bracket"></i>
+              Déconnexion
+            </button>
+          </>
+        ) : (
           <button className="header-btn">
-            <i className="fa-solid fa-list"></i>
-            Liste</button>
-          <div>*image profil*</div>
-          <button className="header-btn" onClick={logout}>
-            <i className="fa-solid fa-right-from-bracket"></i>
-            Déconnexion
-          </button>
-        </>
-      ) : (
-        <button className="header-btn">
-          <i className="fa-solid fa-right-to-bracket"></i>
-          Connexion</button>
-      )}
-    </div>
+            <i className="fa-solid fa-right-to-bracket"></i>
+            Connexion</button>
+        )
+      }
+    </div >
   );
 };
 

@@ -24,32 +24,30 @@ const Home = () => {
                 password
             }
         })
-        .then((res) => {
-            console.log(res)
-            const {success} = res.data
-            console.log(success);
-            try {
-                localStorage.setItem('token', res.data.token);
+            .then((res) => {
+                console.log(res)
+                const { success } = res.data
+                console.log(success);
+                try {
+                    localStorage.setItem('token', res.data.token);
 
-            dispatch(setUserToken(res.data.token));
-            dispatch(setUser(res.data.user));
-            // redirection 1...
-            }  catch {
-                console.log('raté')
-            }
-
-            //window.location ='/lili'; /* Mettre la localisation de la route pour affichage de la page random*/
-        })
-        .catch((err) => {
-            console.log(err);
-        })
+                    dispatch(setUserToken(res.data.token));
+                    dispatch(setUser(res.data.user));
+                    // redirection 1...
+                } catch {
+                    console.log('raté')
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            })
     }
 
     const store = useSelector(state => state);
 
 
 
-    
+
     return (
         <div className='login-container'>
             <div className='login-header'>
@@ -57,16 +55,16 @@ const Home = () => {
                 <div className='line'></div>
                 <p>Pour vous connecter à l'intranet, entrez votre identifiant et mot de passe</p>
             </div>
-           <form action="" onSubmit={handleLogin}>
-            <div className='input-container'>
-                <label htmlFor='email'>Email</label>
-                <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
-            </div>
-            <div className='input-container'>
-                <label htmlFor='password'>Mot de passe</label>
-                <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
-            </div>
-            <input type="submit" className='form-btn' value="Connexion"/>
+            <form action="" onSubmit={handleLogin}>
+                <div className='input-container'>
+                    <label htmlFor='email'>Email</label>
+                    <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                </div>
+                <div className='input-container'>
+                    <label htmlFor='password'>Mot de passe</label>
+                    <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                </div>
+                <input type="submit" className='form-btn' value="Connexion" />
             </form>
         </div>
     );

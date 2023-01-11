@@ -7,8 +7,7 @@ import "./workerList.css";
 const WorkerList = () => {
 
     return (<>
-
-
+        WORKER LIST PAGE
     </>
     );
 };

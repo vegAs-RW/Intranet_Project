@@ -7,6 +7,7 @@ import "./editProfile.css";
 const EditProfile = () => {
 
     return (<>
+        EDIT PAGE
 
 
     </>
