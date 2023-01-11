@@ -29,11 +29,13 @@ const userSlice = createSlice({
             state.randomUser = action.payload;
         },
         setAllUser(state, action) {
-            state.allUser = action.payload;
+            state.allUser = action.payload
         }
+
     }
 });
 
+export const { setUserToken, setUser, resetUser, setRandomUser, setAllUser } = userSlice.actions;
 export const { setUserToken, setUser, resetUser, setRandomUser, setAllUser } = userSlice.actions;
 
 export default userSlice.reducer;

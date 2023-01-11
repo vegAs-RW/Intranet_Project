@@ -1,7 +1,4 @@
 
-
-
-
 import { useEffect } from "react";
 import { BrowserRouter, NavLink, Routes, Route } from "react-router-dom";
 import "./App.css";
@@ -15,16 +12,8 @@ import EditProfile from './components/EditProfile/EditProfile';
 
 
 function App() {
+  //const isLogged = useSelector(state => state.user.token)
 
-  /*const dispatch = useDispatch();
-
-  useEffect(() => {
-    const getToken = () => {
-      let token = localStorage.getItem("token");
-      dispatch(setUserToken(token))
-    };
-    getToken();
-  }, []);*/
 
   return (
 
@@ -35,6 +24,7 @@ function App() {
           <Route path="/" element={<Home />} ></Route>
           <Route path="/worker" element={<WorkerList />} ></Route>
           <Route path="/edit" element={<EditProfile />} ></Route>
+          
         </Routes>
       </div>
     </BrowserRouter>
