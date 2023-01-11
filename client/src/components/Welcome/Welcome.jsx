@@ -72,6 +72,7 @@ const Welcome = () => {
           email={randomUser.email}
           phone={randomUser.phone}
           service={randomUser.service}
+          isEditBtn={false}
         />
       )}
       <button onClick={getRandomUser}>DIRE BONJOUR A QUELQU'UN D'AUTRE</button>
