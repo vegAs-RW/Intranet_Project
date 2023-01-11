@@ -61,7 +61,7 @@ const EditProfile = () => {
           })
           .catch((err) => console.log(err));
       })
-      .then (() => {
+      .then(() => {
         setCivility("");
         setCategory("");
         setLastname("");
@@ -72,9 +72,10 @@ const EditProfile = () => {
         setBirthdate("");
         setPhone("");
         setCity("");
-        setCountry("")
+        setCountry("");
         setPhoto("");
-        document.querySelector('.validation').innerHTML= 'Vos information ont été modifiés avec succés !'
+        document.querySelector(".validation").innerHTML =
+          "Vos information ont été modifiés avec succés !";
       })
       .catch((err) => {
         console.log(err);
@@ -94,14 +95,22 @@ const EditProfile = () => {
             <p className="validation"></p>
             <div className="input-container">
               <label htmlFor="civility">* Civilité :</label>
-              <select name="civility" id="civility" onChange={(e) => setCivility(e.target.value)}>
+              <select
+                name="civility"
+                id="civility"
+                onChange={(e) => setCivility(e.target.value)}
+              >
                 <option value="male">male</option>
                 <option value="female">female</option>
               </select>
             </div>
             <div className="input-container">
               <label htmlFor="category">* Catégorie :</label>
-              <select name="category" id="category" onChange={(e) => setCategory(e.target.value)}>
+              <select
+                name="category"
+                id="category"
+                onChange={(e) => setCategory(e.target.value)}
+              >
                 <option value="Client">Client</option>
                 <option value="Marketing">Marketing</option>
                 <option value="Technique">Technique</option>
