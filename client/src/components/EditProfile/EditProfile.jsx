@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { setUser } from "../../features/userSlice";
+import { setUser, setAllUser } from "../../features/userSlice";
 
 import "./editProfile.css";
 import { useEffect } from "react";
@@ -60,6 +60,19 @@ const EditProfile = () => {
             dispatch(setUser(res.data));
           })
           .catch((err) => console.log(err));
+      })
+      .then(() => {
+        axios({
+            method: "get",
+            url: `http://localhost:9000/api/collaborateurs`,
+            headers: {
+              Authorization: `Bearer ${userToken}`,
+            },
+          })
+            .then((res) => {
+              dispatch(setAllUser(res.data));
+            })
+            .catch((err) => console.log(err));
       })
       .then(() => {
         setCivility("");
