@@ -10,6 +10,7 @@ import Welcome from './components/Welcome/Welcome';
 import WorkerList from './components/WorkerList/WorkerList';
 import EditProfile from './components/EditProfile/EditProfile';
 import AddWorker from "./components/AddWorker/AddWorker";
+import AdminEditProfile from './components/EditProfile/AdminEditProfile';
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
           <Route path="/" element={<Home />} ></Route>
           <Route path="/worker" element={<WorkerList />} ></Route>
           <Route path="/edit" element={<EditProfile />} ></Route>
+          <Route path="/admin-edit" element={<AdminEditProfile />} ></Route>
           <Route path='/addworker' element={<AddWorker />}></Route> 
         </Routes>
       </div>

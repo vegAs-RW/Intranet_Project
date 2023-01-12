@@ -2,9 +2,10 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import "./card.css";
-import { setAllUser } from "../../features/userSlice";
+import { setAllUser, setUserToModifyId } from "../../features/userSlice";
 import { useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
+import AdminEditProfile from "../EditProfile/AdminEditProfile";
 
 const Card = ({
   lastname,
@@ -74,7 +75,13 @@ const Card = ({
     if (service == "Technique") { return { backgroundColor: "blue" } }
   }
 
-  // Redirection
+const handleModify = () => {
+  dispatch(setUserToModifyId(userId))
+}
+
+ useEffect(() => {
+    console.log(userId);
+ })
 
 
   return (
@@ -115,9 +122,9 @@ const Card = ({
           <>
           <div>
             
-            <Link to='/edit'>
-            <button className="card-btn">Modifier</button>
-            </Link>
+            <NavLink to='/admin-edit'>
+            <button className="card-btn" onClick={handleModify}>Modifier</button>
+            </NavLink>
             
             <button className="card-btn" onClick={deleteUser}>Supprimer</button>
           </div>

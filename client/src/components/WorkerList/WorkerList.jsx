@@ -100,7 +100,7 @@ const WorkerList = () => {
             value={selectedWorkService}
             onChange={handleWorkServiceChange}
           >
-            <option value="default">- Aucune - </option>
+            <option value="default">- Aucun - </option>
             <option value="technique">Service technique</option>
             <option value="marketing">Service marketing</option>
             <option value="client">Service client</option>
