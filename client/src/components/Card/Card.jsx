@@ -79,9 +79,6 @@ const handleModify = () => {
   dispatch(setUserToModifyId(userId))
 }
 
- useEffect(() => {
-    console.log(userId);
- })
 
 
   return (

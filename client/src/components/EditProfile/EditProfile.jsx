@@ -3,7 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser, setAllUser } from "../../features/userSlice";
-import { setUser } from "../../features/userSlice";
+
 import { useNavigate } from "react-router-dom";
 
 

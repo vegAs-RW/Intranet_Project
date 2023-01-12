@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 const WorkerList = () => {
 
   const allUser = useSelector((state) => state.user.allUser);
-
+const connectedUserData= useSelector((state) => state.user.user)
   const [searchQuery, setSearchQuery] = useState('');
   const [searchBy, setSearchBy] = useState('name');
   const [selectedWorkService, setSelectedWorkService] = useState('default');
@@ -44,7 +44,8 @@ const WorkerList = () => {
     return filtredUser.map((user, Key) =>
       <div key={Key} className="user_table_card" >
 
-        <Card
+        <Card key={user.id}
+            userId={user.id}
           lastname={user.lastname}
           firstname={user.firstname}
           birthdate={user.birthdate}
@@ -54,6 +55,7 @@ const WorkerList = () => {
           email={user.email}
           phone={user.phone}
           service={user.service}
+          isEditBtn={connectedUserData.isAdmin}
         />
       </div>)
   }
