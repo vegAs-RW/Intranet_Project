@@ -59,7 +59,6 @@ const Welcome = () => {
         collaborateurs{" "}
       </p>
       <p>Avez vous dis bonjour à:</p>
-      calendar
       <br></br>
       {/* <FontAwesomeIcon icon="fa-solid fa-cake-candles" /> */}
       {randomUser && (

@@ -3,11 +3,24 @@ import { useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../../features/userSlice";
+import { useNavigate } from "react-router-dom";
+
 
 import "./editProfile.css";
 import { useEffect } from "react";
 
 const EditProfile = () => {
+
+  const isLogged = useSelector(state => state.user.token)
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isLogged) {
+      navigate("/");
+    }
+  }, [isLogged]);
+
+
   const dispatch = useDispatch();
   const userToken = useSelector((state) => state.user.token);
   const userId = useSelector((state) => state.user.user.id);
@@ -82,9 +95,6 @@ const EditProfile = () => {
       });
   };
 
-  useEffect(() => {
-    console.log(userId);
-  });
   return (
     <>
       {userId && (

@@ -15,6 +15,7 @@ const Header = () => {
   const logout = () => {
     //localStorage.removeItem("token");
     dispatch(resetUser);
+
     location.reload();
   };
 
@@ -37,11 +38,11 @@ const Header = () => {
           </Link>
           {connectedUserData.isAdmin && (
             <Link to="/addworker">
-            <button className="header-btn">
-              <i className="fa-solid fa-list"></i>
-              Ajouter
-            </button>
-          </Link>
+              <button className="header-btn">
+                <i className="fa-solid fa-list"></i>
+                Ajouter
+              </button>
+            </Link>
           )}
 
           <Link to="/edit">
