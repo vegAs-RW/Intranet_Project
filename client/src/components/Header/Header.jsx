@@ -6,6 +6,7 @@ import { resetUser } from "../../features/userSlice";
 import { Link, NavLink } from "react-router-dom";
 
 import "./Header.css";
+import EditProfile from "../EditProfile/EditProfile";
 
 const Header = () => {
   const dispatch = useDispatch();

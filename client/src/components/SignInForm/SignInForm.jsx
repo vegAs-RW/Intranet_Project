@@ -23,7 +23,6 @@ const SignInForm = () => {
       },
     })
       .then((res) => {
-        console.log(res);
         const { success } = res.data;
         console.log(success);
         try {

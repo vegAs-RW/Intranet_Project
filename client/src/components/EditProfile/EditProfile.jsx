@@ -7,8 +7,9 @@ import { setUser, setAllUser } from "../../features/userSlice";
 import "./editProfile.css";
 import { useEffect } from "react";
 
-const EditProfile = () => {
+const EditProfile = ({}) => {
   const dispatch = useDispatch();
+  const connectedUserData = useSelector((state) => state.user.user);
   const userToken = useSelector((state) => state.user.token);
   const userId = useSelector((state) => state.user.user.id);
   const [civility, setCivility] = useState("");
@@ -102,7 +103,11 @@ const EditProfile = () => {
     <>
       {userId && (
         <>
-          <h1>Modifier mon profil</h1>
+    
+            
+                <h1>Modifier le profil</h1>
+           
+          
           <div className="line"></div>
           <form action="" onSubmit={handleSubmit}>
             <p className="validation"></p>

@@ -4,6 +4,7 @@ import axios from "axios";
 import "./card.css";
 import { setAllUser } from "../../features/userSlice";
 import { useEffect } from "react";
+import { Link, NavLink } from "react-router-dom";
 
 const Card = ({
   lastname,
@@ -66,13 +67,15 @@ const Card = ({
       .catch((err) => console.log(err))
   }
 
-
+  // Modifier la couleur du service
   const getServicesColor = () => {
     if (service == "Marketing") { return { backgroundColor: "palevioletred" } }
     if (service == "Client") { return { backgroundColor: "green" } }
     if (service == "Technique") { return { backgroundColor: "blue" } }
-
   }
+
+  // Redirection
+
 
   return (
     <div className="card">
@@ -109,10 +112,16 @@ const Card = ({
 
         >{service.toUpperCase()}</div>
         {isEditBtn && (
+          <>
           <div>
+            
+            <Link to='/edit'>
             <button className="card-btn">Modifier</button>
+            </Link>
+            
             <button className="card-btn" onClick={deleteUser}>Supprimer</button>
           </div>
+          </>
         )}
       </div>
     </div>

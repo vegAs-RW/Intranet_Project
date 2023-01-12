@@ -48,7 +48,6 @@ const Welcome = () => {
   useEffect(() => {
     getRandomUser();
     getAllUser();
-    console.log(randomUser);
   }, []);
 
   return (
