@@ -16,6 +16,8 @@ function App() {
   //const isLogged = useSelector(state => state.user.token)
 
 
+ 
+
   return (
 
     <BrowserRouter>
@@ -25,8 +27,7 @@ function App() {
           <Route path="/" element={<Home />} ></Route>
           <Route path="/worker" element={<WorkerList />} ></Route>
           <Route path="/edit" element={<EditProfile />} ></Route>
-          <Route path='/addworker' element={<AddWorker />}></Route>
-          
+          <Route path='/addworker' element={<AddWorker />}></Route> 
         </Routes>
       </div>
     </BrowserRouter>
