@@ -85,7 +85,14 @@ const Card = ({
 
   return (
     <div className="card">
-      <img style={{ height: "100%" }} src={photo}></img>
+      {photo ?
+        <img style={{ height: "100%" }} src={photo}></img>
+        : <img src="/Avatar.jpeg" alt="avatar vierge" />
+
+
+
+      }
+
 
       <div className="card_right">
         <div style={{ fontWeight: "700" }}>
@@ -94,7 +101,7 @@ const Card = ({
         </div>
 
         <div style={{ fontWeight: "300" }}>
-          {city + ", " + country} {}
+          {city + ", " + country} { }
         </div>
 
         <div className="card_line">

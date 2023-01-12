@@ -55,6 +55,7 @@ const Header = () => {
                   src="/istockphoto-1008665336-170667a.jpeg"
                   alt="avatar vierge"
                 />
+                <img src="/Avatar.jpeg" alt="avatar vierge" />
               )}
             </div>
           </Link>

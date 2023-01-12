@@ -58,10 +58,15 @@ const WorkerList = () => {
       }
     }
 
-    return filtredUser.map((user, Key) => (
-      <div key={Key} className="user_table_card">
-        <Card
-          key={user.id}
+
+    if (!filtredUser[0]) {
+      return <>Aucun résultat trouvé</>
+    }
+
+    return filtredUser.map((user, Key) =>
+      <div key={Key} className="user_table_card" >
+
+        <Card key={user.id}
           userId={user.id}
           lastname={user.lastname}
           firstname={user.firstname}
