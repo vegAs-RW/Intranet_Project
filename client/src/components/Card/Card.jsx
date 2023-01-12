@@ -16,6 +16,12 @@ const Card = ({
   isEditBtn
 }) => {
 
+  // Récupération du store user
+  const connectedUserData = useSelector((state) => state.user.user);
+  const userData = useSelector((state) => state.user.allUser)
+  // Appel du store contenant le token de l'utilisateur connecté
+  const userToken = useSelector((state) => state.user.token);
+  const randomUserData = useSelector((state) => state.user.randomUser)
 
   // Fonction pour afficher l'age
   const getAge = () => {
@@ -92,7 +98,7 @@ const Card = ({
           </div>
         )}
       </div>
-    </div >
+    </div>
   );
 };
 

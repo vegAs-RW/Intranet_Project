@@ -55,7 +55,7 @@ const WorkerList = () => {
         return filtredUser.map((user, Key) =>
             <div key={Key} className="user_table_card" >
 
-                <Card key={user.id} className="user_table_card"
+                <Card key={user.id}
                     lastname={user.lastname}
                     firstname={user.firstname}
                     birthdate={user.birthdate}
