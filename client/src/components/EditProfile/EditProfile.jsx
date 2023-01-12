@@ -3,14 +3,27 @@ import { useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../../features/userSlice";
+import { useNavigate } from "react-router-dom";
+
 
 import "./editProfile.css";
 import { useEffect } from "react";
 
 const EditProfile = () => {
+
+  const isLogged = useSelector(state => state.user.token)
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isLogged) {
+      navigate("/");
+    }
+  }, [isLogged]);
+
+
   const dispatch = useDispatch();
   const userToken = useSelector((state) => state.user.token);
-  const userId = useSelector((state) => state.user.user.id);
+  const user = useSelector((state) => state.user.user);
   const [civility, setCivility] = useState("");
   const [category, setCategory] = useState("");
   const [lastname, setLastname] = useState("");
@@ -28,7 +41,7 @@ const EditProfile = () => {
     e.preventDefault();
     axios({
       method: "put",
-      url: `http://localhost:9000/api/collaborateurs/${userId}`,
+      url: `http://localhost:9000/api/collaborateurs/${user.id}`,
       headers: {
         Authorization: `Bearer ${userToken}`,
       },
@@ -50,7 +63,7 @@ const EditProfile = () => {
         console.log(res);
         axios({
           method: "get",
-          url: `http://localhost:9000/api/collaborateurs/${userId}`,
+          url: `http://localhost:9000/api/collaborateurs/${user.id}`,
           headers: {
             Authorization: `Bearer ${userToken}`,
           },
@@ -82,14 +95,12 @@ const EditProfile = () => {
       });
   };
 
-  useEffect(() => {
-    console.log(userId);
-  });
+
   return (
     <>
-      {userId && (
+      {user && user.id && (
         <>
-          <h1>Modifier mon profil</h1>
+          <h1 style={{ textAlign: "center" }}>Modifier mon profil</h1>
           <div className="line"></div>
           <form action="" onSubmit={handleSubmit}>
             <p className="validation"></p>

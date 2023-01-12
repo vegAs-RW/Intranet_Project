@@ -1,16 +1,17 @@
 .login-container {
-    border: 1px solid white;
+    border: 1px solid rgb(114, 110, 110);
     width: 60%;
     margin: 50px auto;
     color: black;
-    background-color: white;
-    padding: 50px 0;
+    background-color: #fff9f9;
+    padding: 2rem 1rem;
 
 }
 
 .login-header p {
     font-weight: bold;
 }
+
 .line {
     border: 0.5px solid grey;
     width: 80%;
@@ -30,14 +31,17 @@ form {
     background-color: red;
     border-color: red;
 }
+
 .input-container {
     margin: 2px auto;
 }
+
 .input-container input {
     background-color: white;
     border: 1px solid grey;
     color: black;
 }
+
 .input-container label {
     margin: 0 5px 0 0;
 }

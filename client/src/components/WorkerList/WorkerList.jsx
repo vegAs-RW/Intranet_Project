@@ -1,17 +1,20 @@
-import { useState } from "react";
-import axios, { all } from "axios";
-
+import { useState, useEffect } from 'react';
 import Card from "../Card/Card";
 import { useSelector } from "react-redux";
 
 import "./workerList.css";
 
+import { useNavigate } from "react-router-dom";
+
 const WorkerList = () => {
+
   const allUser = useSelector((state) => state.user.allUser);
-  const connectedUserData = useSelector((state) => state.user.user);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [searchBy, setSearchBy] = useState("name");
-  const [selectedWorkService, setSelectedWorkService] = useState("default");
+
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchBy, setSearchBy] = useState('name');
+  const [selectedWorkService, setSelectedWorkService] = useState('default');
+
+
 
   const returnFiltredList = () => {
     if (!allUser) {
@@ -28,25 +31,20 @@ const WorkerList = () => {
 
     if (searchQuery !== "") {
       if (searchBy === "name") {
-        filtredUser = filtredUser.filter(
-          (user) =>
-            user.firstname.toLowerCase().includes(searchQuery) ||
-            user.lastname.toLowerCase().includes(searchQuery)
-        );
+        filtredUser = filtredUser.filter(user => user.firstname.toLowerCase().includes(searchQuery) || user.lastname.toLowerCase().includes(searchQuery))
       }
 
       if (searchBy === "location") {
-        filtredUser = filtredUser.filter(
-          (user) =>
-            user.city.toLowerCase().includes(searchQuery) ||
-            user.country.toLowerCase().includes(searchQuery)
-        );
+        filtredUser = filtredUser.filter(user => user.city.toLowerCase().includes(searchQuery) || user.country.toLowerCase().includes(searchQuery))
       }
     }
 
-    return filtredUser.map((user, Key) => (
-        <Card key={user.id}
-            userId={user.id}
+
+
+    return filtredUser.map((user, Key) =>
+      <div key={Key} className="user_table_card" >
+
+        <Card
           lastname={user.lastname}
           firstname={user.firstname}
           birthdate={user.birthdate}
@@ -56,11 +54,9 @@ const WorkerList = () => {
           email={user.email}
           phone={user.phone}
           service={user.service}
-          isEditBtn={connectedUserData.isAdmin}
         />
-      
-    ));
-  };
+      </div>)
+  }
 
   const handleWorkServiceChange = (event) => {
     setSelectedWorkService(event.target.value);
