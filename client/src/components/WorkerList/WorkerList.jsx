@@ -80,7 +80,7 @@ const WorkerList = () => {
           isEditBtn={connectedUserData.isAdmin}
         />
       </div>
-    ));
+    );
   };
 
   const handleWorkServiceChange = (event) => {

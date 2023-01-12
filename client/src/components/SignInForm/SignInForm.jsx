@@ -9,6 +9,8 @@ import { setUser, setUserToken } from "../../features/userSlice";
 // Import style
 import "./SignInForm.css";
 
+
+
 const SignInForm = () => {
   // State local pour stocker la data des inputs
   const [email, setEmail] = useState("");

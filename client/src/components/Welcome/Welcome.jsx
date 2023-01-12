@@ -57,7 +57,7 @@ const Welcome = () => {
     <div className="welcome">
       <h1> Bienvenue sur l'intranet</h1>
       <p>
-        la platforme de l'entreprise qui vous permet de retrouver tous vos
+        La platforme de l'entreprise qui vous permet de retrouver tous vos
         collaborateurs{" "}
       </p>
       <p>Avez vous dis bonjour à:</p>

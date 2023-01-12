@@ -13,11 +13,16 @@
 
 .filter-container {
     display: flex;
-    /* justify-content: space-around; */
+    justify-content: center; 
     margin: 2rem;
+    
 }
 
 .filter-input {
 
     margin: 0.5rem;
+}
+h2 {
+    text-align: center;
+    font-size: 2rem;
 }
