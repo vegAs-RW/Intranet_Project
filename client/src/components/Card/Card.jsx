@@ -89,13 +89,12 @@ const handleModify = () => {
       <img style={{ height: "100%" }} src={photo}></img>
 
       <div className="card_right">
-        <div>
-          {" "}
-          {firstname + " " + lastname} { }
+        <div style={{ fontWeight: "700" }} >
+          {firstname + " " + lastname + " "}
           <span style={{ fontStyle: "italic" }}>{getAge()}</span>{" "}
         </div>
 
-        <div>
+        <div style={{ fontWeight: "300" }}>
           {city + ", " + country} { }
         </div>
 

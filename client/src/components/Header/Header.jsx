@@ -29,7 +29,7 @@ const Header = () => {
       </Link>
 
       {userToken ? (
-        <>
+        <div className="header-right-container">
           <Link to="/worker">
             <button className="header-btn">
               <i className="fa-solid fa-list"></i>
@@ -38,11 +38,11 @@ const Header = () => {
           </Link>
           {connectedUserData.isAdmin && (
             <Link to="/addworker">
-            <button className="header-btn">
-              <i className="fa-solid fa-list"></i>
-              Ajouter
-            </button>
-          </Link>
+              <button className="header-btn">
+                <i className="fa-solid fa-list"></i>
+                Ajouter
+              </button>
+            </Link>
           )}
 
           <Link to="/edit">
@@ -58,7 +58,7 @@ const Header = () => {
             <i className="fa-solid fa-right-from-bracket"></i>
             Déconnexion
           </button>
-        </>
+        </div>
       ) : (
         <button className="header-btn">
           <i className="fa-solid fa-right-to-bracket"></i>
