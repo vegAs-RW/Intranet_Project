@@ -1,20 +1,20 @@
-import { useContext } from "react";
-import { useEffect } from "react";
-import { useState } from "react";
+// Import des hook
 import { useDispatch, useSelector } from "react-redux";
+// Import reducer
 import { resetUser } from "../../features/userSlice";
-import { Link, NavLink } from "react-router-dom";
-
+// Import Router
+import { Link } from "react-router-dom";
+// Import style
 import "./Header.css";
-import EditProfile from "../EditProfile/EditProfile";
 
 const Header = () => {
   const dispatch = useDispatch();
+  // Récupération des stores
   const userToken = useSelector((state) => state.user.token);
   const connectedUserData = useSelector((state) => state.user.user);
 
+  // Fonction pour se deconnecté
   const logout = () => {
-    //localStorage.removeItem("token");
     dispatch(resetUser);
     location.reload();
   };
@@ -36,6 +36,7 @@ const Header = () => {
               Liste
             </button>
           </Link>
+
           {connectedUserData.isAdmin && (
             <Link to="/addworker">
               <button className="header-btn">
@@ -50,7 +51,10 @@ const Header = () => {
               {connectedUserData && connectedUserData.photo ? (
                 <img src={connectedUserData.photo} alt="photo de profil" />
               ) : (
-                <img src="/istockphoto-1008665336-170667a.jpeg" alt="avatar vierge" />
+                <img
+                  src="/istockphoto-1008665336-170667a.jpeg"
+                  alt="avatar vierge"
+                />
               )}
             </div>
           </Link>

@@ -1,10 +1,14 @@
 import React from "react";
+// Import axios pour requete API
 import axios from "axios";
+// Import composant
 import Card from "../Card/Card";
-
+// Import style
 import "./welcome.css";
+// Import hook
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+// Import reducer
 import { setRandomUser, setAllUser } from "../../features/userSlice";
 
 const Welcome = () => {
@@ -27,8 +31,8 @@ const Welcome = () => {
       })
       .catch((err) => console.log(err));
   };
+  
   // Requete API pour stocker dans le store la data de tous les utilisateurs
-
   const getAllUser = async () => {
     await axios({
       method: "get",
@@ -43,7 +47,6 @@ const Welcome = () => {
       .catch((err) => console.log(err));
   };
 
-  // Appel des fonctions de requete API dans le hook
   // Appel des fonctions de requete API dans le hook
   useEffect(() => {
     getRandomUser();

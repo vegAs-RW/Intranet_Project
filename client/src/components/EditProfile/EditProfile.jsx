@@ -1,31 +1,31 @@
 import React from "react";
-import { useState } from "react";
-import axios from "axios";
+// Import des differents hook
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setUser, setAllUser } from "../../features/userSlice";
-
 import { useNavigate } from "react-router-dom";
-
-
+// Import axios pour requete API
+import axios from "axios";
+// Import des reducers
+import { setUser, setAllUser } from "../../features/userSlice";
+// Import style
 import "./editProfile.css";
-import { useEffect } from "react";
 
 const EditProfile = () => {
-
-  const isLogged = useSelector(state => state.user.token)
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!isLogged) {
-      navigate("/");
-    }
-  }, [isLogged]);
-
-
-  const dispatch = useDispatch();
-  const connectedUserData = useSelector((state) => state.user.user);
+  // Import du store pour verifier si il y a le token de connexion
   const userToken = useSelector((state) => state.user.token);
   const user = useSelector((state) => state.user.user);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  // Redirection si pas de token
+  useEffect(() => {
+    if (!userToken) {
+      navigate("/");
+    }
+  }, [userToken]);
+
+  // Création de state local avec le hook useState pour stocker les value du formulaire
   const [civility, setCivility] = useState("");
   const [category, setCategory] = useState("");
   const [lastname, setLastname] = useState("");
@@ -39,6 +39,7 @@ const EditProfile = () => {
   const [country, setCountry] = useState("");
   const [photo, setPhoto] = useState("");
 
+  // Fonction pour modifier les informations du user
   const handleSubmit = (e) => {
     e.preventDefault();
     axios({
@@ -63,6 +64,7 @@ const EditProfile = () => {
     })
       .then((res) => {
         console.log(res);
+        // Une fois les modifs enregistrées, on referesh le store User
         axios({
           method: "get",
           url: `http://localhost:9000/api/collaborateurs/${user.id}`,
@@ -77,18 +79,20 @@ const EditProfile = () => {
           .catch((err) => console.log(err));
       })
       .then(() => {
+        // On refresh le store AllUser
         axios({
-            method: "get",
-            url: `http://localhost:9000/api/collaborateurs`,
-            headers: {
-              Authorization: `Bearer ${userToken}`,
-            },
+          method: "get",
+          url: `http://localhost:9000/api/collaborateurs`,
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        })
+          .then((res) => {
+            dispatch(setAllUser(res.data));
           })
-            .then((res) => {
-              dispatch(setAllUser(res.data));
-            })
-            .catch((err) => console.log(err));
+          .catch((err) => console.log(err));
       })
+      // On vide les champs du formulaire en remetant le state local sur valeur initiale
       .then(() => {
         setCivility("");
         setCategory("");
@@ -109,7 +113,6 @@ const EditProfile = () => {
         console.log(err);
       });
   };
-
 
   return (
     <>

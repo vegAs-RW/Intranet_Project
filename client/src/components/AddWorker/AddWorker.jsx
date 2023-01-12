@@ -1,17 +1,20 @@
 import React from "react";
-import { useState } from "react";
-import axios from "axios";
+// Import hook
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setUser, setAllUser } from "../../features/userSlice";
-
+// Import axios pour requete API
+import axios from "axios";
+// Import du reducer
+import { setAllUser } from "../../features/userSlice";
+// Import style
 import "../EditProfile/editProfile.css";
-import { useEffect } from "react";
 
 const AddWorker = ({}) => {
   const dispatch = useDispatch();
-  const connectedUserData = useSelector((state) => state.user.user);
+  // Import des stores globaux
   const userToken = useSelector((state) => state.user.token);
   const userId = useSelector((state) => state.user.user.id);
+  // Création de state local avec le hook useState pour stocker les value du formulaire
   const [civility, setCivility] = useState("");
   const [category, setCategory] = useState("");
   const [lastname, setLastname] = useState("");
@@ -25,6 +28,7 @@ const AddWorker = ({}) => {
   const [country, setCountry] = useState("");
   const [photo, setPhoto] = useState("");
 
+  // Fonction pour créé un nouveau user
   const handleCreateNewUser = (e) => {
     e.preventDefault();
     axios({
@@ -48,20 +52,22 @@ const AddWorker = ({}) => {
       },
     })
       .then((res) => {
-        console.log(res)
+        console.log(res);
+        // Une fois le user créé on refresh le store AllUser avec la nouvelle data
         axios({
-            method: "get",
-            url: `http://localhost:9000/api/collaborateurs`,
-            headers: {
-              Authorization: `Bearer ${userToken}`,
-            },
+          method: "get",
+          url: `http://localhost:9000/api/collaborateurs`,
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        })
+          .then((res) => {
+            dispatch(setAllUser(res.data));
           })
-            .then((res) => {
-              dispatch(setAllUser(res.data));
-            })
-            .catch((err) => console.log(err));
+          .catch((err) => console.log(err));
       })
       .then(() => {
+        // On vide le state local une fois le formulaire soumis
         setCivility("");
         setCategory("");
         setLastname("");
@@ -82,18 +88,11 @@ const AddWorker = ({}) => {
       });
   };
 
-  useEffect(() => {
-    //console.log(userId);
-  });
   return (
     <>
       {userId && (
         <>
-    
-            
-                <h1>Ajouter un collaborateur</h1>
-           
-          
+          <h1>Ajouter un collaborateur</h1>
           <div className="line"></div>
           <form action="" onSubmit={handleCreateNewUser}>
             <p className="validation"></p>

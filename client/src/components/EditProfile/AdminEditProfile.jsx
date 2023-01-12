@@ -1,24 +1,24 @@
 import React from "react";
+// Import hook de react
 import { useState } from "react";
+// Import Axios pour requete API
 import axios from "axios";
+// Import hook de react-redux
 import { useDispatch, useSelector } from "react-redux";
-import { setUser, setAllUser } from "../../features/userSlice";
-
+// Import reducer
+import { setAllUser } from "../../features/userSlice";
+// Import style
 import "./editProfile.css";
-import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+
 
 const AdminEditProfile = () => {
 
-    let location = useLocation();
-    console.log(location)
-
-
-    //const {userId}= props.props
   const dispatch = useDispatch();
+  // Récupération des stores 
   const connectedUserData = useSelector((state) => state.user.user);
   const userToken = useSelector((state) => state.user.token);
   const userId = useSelector((state) => state.user.userToModify);
+  // Création de state local avec le hook useState pour stocker les value du formulaire
   const [civility, setCivility] = useState("");
   const [category, setCategory] = useState("");
   const [lastname, setLastname] = useState("");
@@ -32,6 +32,8 @@ const AdminEditProfile = () => {
   const [country, setCountry] = useState("");
   const [photo, setPhoto] = useState("");
 
+
+  // Fonction avec appel API pour modifier un user à la soumission du formulaire
   const handleSubmitAdmin = (e) => {
     e.preventDefault();
     axios({
@@ -55,18 +57,20 @@ const AdminEditProfile = () => {
       },
     })
       .then(() => {
+        // Une fois requete valider on refresh le store AllUser
         axios({
-            method: "get",
-            url: `http://localhost:9000/api/collaborateurs`,
-            headers: {
-              Authorization: `Bearer ${userToken}`,
-            },
+          method: "get",
+          url: `http://localhost:9000/api/collaborateurs`,
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        })
+          .then((res) => {
+            dispatch(setAllUser(res.data));
           })
-            .then((res) => {
-              dispatch(setAllUser(res.data));
-            })
-            .catch((err) => console.log(err));
+          .catch((err) => console.log(err));
       })
+      // On vide les champs du formulaire en remetant le state local sur valeur initiale
       .then(() => {
         setCivility("");
         setCategory("");
@@ -88,18 +92,12 @@ const AdminEditProfile = () => {
       });
   };
 
-  useEffect(() => {
-    
-  });
   return (
     <>
       {connectedUserData.isAdmin && (
         <>
-    
-            
-                <h1>Modifier le profil (admin)</h1>
-           
-          
+          <h1>Modifier le profil (admin)</h1>
+
           <div className="line"></div>
           <form action="" onSubmit={handleSubmitAdmin}>
             <p className="validation"></p>

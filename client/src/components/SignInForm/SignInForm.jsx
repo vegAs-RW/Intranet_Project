@@ -1,17 +1,22 @@
 import React from "react";
+// Import hook
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+// Import axios pour requete API
 import axios from "axios";
-
+// Import reducer
+import { setUser, setUserToken } from "../../features/userSlice";
+// Import style
 import "./SignInForm.css";
-import { useDispatch, useSelector, useStore } from "react-redux";
-import { setUser, setUserToken, setRandomUser } from "../../features/userSlice";
 
 const SignInForm = () => {
+  // State local pour stocker la data des inputs
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
 
+  // Fonction pour se connecter
   const handleLogin = (e) => {
     e.preventDefault();
     axios({
@@ -22,15 +27,14 @@ const SignInForm = () => {
         password,
       },
     })
+      // Si requete validé on dipatch la data du user dans le store et on dispatch le token dans un store
       .then((res) => {
         const { success } = res.data;
         console.log(success);
         try {
           localStorage.setItem("token", res.data.token);
-
           dispatch(setUserToken(res.data.token));
           dispatch(setUser(res.data.user));
-          // redirection 1...
         } catch {
           console.log("raté");
         }
@@ -76,4 +80,3 @@ const SignInForm = () => {
 };
 
 export default SignInForm;
-
