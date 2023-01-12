@@ -50,7 +50,7 @@ const Header = () => {
               {connectedUserData && connectedUserData.photo ? (
                 <img src={connectedUserData.photo} alt="photo de profil" />
               ) : (
-                <img src="/istockphoto-1008665336-170667a.jpeg" alt="avatar vierge" />
+                <img src="/Avatar.jpeg" alt="avatar vierge" />
               )}
             </div>
           </Link>

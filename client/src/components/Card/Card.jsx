@@ -60,10 +60,10 @@ const Card = ({
             Authorization: `Bearer ${userToken}`,
           },
         })
-        .then((res) => {
-          console.log(res);
-          dispatch(setAllUser(res.data));
-        })
+          .then((res) => {
+            console.log(res);
+            dispatch(setAllUser(res.data));
+          })
       })
       .catch((err) => console.log(err))
   }
@@ -75,15 +75,22 @@ const Card = ({
     if (service == "Technique") { return { backgroundColor: "blue" } }
   }
 
-const handleModify = () => {
-  dispatch(setUserToModifyId(userId))
-}
+  const handleModify = () => {
+    dispatch(setUserToModifyId(userId))
+  }
 
 
 
   return (
     <div className="card">
-      <img style={{ height: "100%" }} src={photo}></img>
+      {photo ?
+        <img style={{ height: "100%" }} src={photo}></img>
+        : <img src="/Avatar.jpeg" alt="avatar vierge" />
+
+
+
+      }
+
 
       <div className="card_right">
         <div style={{ fontWeight: "700" }} >
@@ -116,14 +123,14 @@ const handleModify = () => {
         >{service.toUpperCase()}</div>
         {isEditBtn && (
           <>
-          <div>
-            
-            <NavLink to='/admin-edit'>
-            <button className="card-btn" onClick={handleModify}>Modifier</button>
-            </NavLink>
-            
-            <button className="card-btn" onClick={deleteUser}>Supprimer</button>
-          </div>
+            <div>
+
+              <NavLink to='/admin-edit'>
+                <button className="card-btn" onClick={handleModify}>Modifier</button>
+              </NavLink>
+
+              <button className="card-btn" onClick={deleteUser}>Supprimer</button>
+            </div>
           </>
         )}
       </div>
