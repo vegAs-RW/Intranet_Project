@@ -51,32 +51,36 @@ const Welcome = () => {
   }, []);
 
   return (
-    <>
+    <div className="welcome">
       <h1> Bienvenue sur l'intranet</h1>
       <p>
         la platforme de l'entreprise qui vous permet de retrouver tous vos
         collaborateurs{" "}
       </p>
       <p>Avez vous dis bonjour à:</p>
-      <br></br>
       {/* <FontAwesomeIcon icon="fa-solid fa-cake-candles" /> */}
       {randomUser && (
-        <Card
-          lastname={randomUser.lastname}
-          firstname={randomUser.firstname}
-          birthdate={randomUser.birthdate}
-          city={randomUser.city}
-          country={randomUser.country}
-          photo={randomUser.photo}
-          email={randomUser.email}
-          phone={randomUser.phone}
-          service={randomUser.service}
-          isEditBtn={false}
+        <div className="welcome_card_container">
 
-        />
+
+          <Card
+            lastname={randomUser.lastname}
+            firstname={randomUser.firstname}
+            birthdate={randomUser.birthdate}
+            city={randomUser.city}
+            country={randomUser.country}
+            photo={randomUser.photo}
+            email={randomUser.email}
+            phone={randomUser.phone}
+            service={randomUser.service}
+            isEditBtn={false}
+
+          />
+        </div>
+
       )}
       <button onClick={getRandomUser}>DIRE BONJOUR A QUELQU'UN D'AUTRE</button>
-    </>
+    </div>
   );
 };
 

@@ -3,10 +3,11 @@
   justify-content: flex-start;
   background-color: rgb(255, 254, 244);
   width: fit-content;
-  height: 10rem;
+  height: 10.5rem;
   width: 26rem;
-  margin: 20px;
+  margin: .5rem;
   font-size: small;
+  text-align: left;
 
 }
 
