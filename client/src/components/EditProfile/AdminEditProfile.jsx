@@ -1,6 +1,6 @@
 import React from "react";
 // Import hook de react
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 // Import Axios pour requete API
 import axios from "axios";
@@ -14,9 +14,10 @@ import "./editProfile.css";
 
 const AdminEditProfile = () => {
 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   // Récupération des stores 
-  const connectedUserData = useSelector((state) => state.user.user);
+  const user = useSelector((state) => state.user.user);
   const userToken = useSelector((state) => state.user.token);
   const userId = useSelector((state) => state.user.userToModify);
   // Création de state local avec le hook useState pour stocker les value du formulaire
@@ -34,6 +35,13 @@ const AdminEditProfile = () => {
   const [photo, setPhoto] = useState("");
   const [adminPrivilege, setAdminPrivilege] = useState(false);
 
+
+  // Redirection si pas de token
+  useEffect(() => {
+    if (!userToken) {
+      navigate("/");
+    }
+  }, [userToken]);
 
   // Fonction avec appel API pour modifier un user à la soumission du formulaire
   const handleSubmitAdmin = (e) => {
@@ -95,16 +103,10 @@ const AdminEditProfile = () => {
       });
   };
 
-  // Redirection si pas de token
-  useEffect(() => {
-    if (!userToken) {
-      navigate("/");
-    }
-  }, [userToken]);
 
   return (
     <>
-      {connectedUserData.isAdmin && (
+      {user && user.isAdmin &&(
         <>
           <h1>Modifier le profil (admin)</h1>
 

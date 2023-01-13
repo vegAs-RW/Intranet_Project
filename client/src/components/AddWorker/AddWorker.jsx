@@ -11,10 +11,12 @@ import { setAllUser } from "../../features/userSlice";
 import "../EditProfile/editProfile.css";
 
 const AddWorker = ({}) => {
+
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   // Import des stores globaux
   const userToken = useSelector((state) => state.user.token);
-  const userId = useSelector((state) => state.user.user.id);
+  const user = useSelector((state) => state.user.user);
   // Création de state local avec le hook useState pour stocker les value du formulaire
   const [civility, setCivility] = useState("");
   const [category, setCategory] = useState("");
@@ -30,6 +32,13 @@ const AddWorker = ({}) => {
   const [photo, setPhoto] = useState("");
   const [adminPrivilege, setAdminPrivilege] = useState(false);
 
+
+  // Redirection si pas de token
+  useEffect(() => {
+    if (!userToken) {
+      navigate("/");
+    }
+  }, [userToken]);
 
 
   // Fonction pour créé un nouveau user
@@ -93,16 +102,11 @@ const AddWorker = ({}) => {
       });
   };
 
-  // Redirection si pas de token
-  useEffect(() => {
-    if (!userToken) {
-      navigate("/");
-    }
-  }, [userToken]);
+  
 
   return (
     <>
-      {userId && (
+      {user && user.id &&(
         <>
           <h1>Ajouter un collaborateur</h1>
           <div className="line"></div>
