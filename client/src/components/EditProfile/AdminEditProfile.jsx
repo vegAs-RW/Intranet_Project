@@ -118,6 +118,7 @@ const AdminEditProfile = () => {
               <select
                 name="civility"
                 id="civility"
+                value={user.civility}
                 onChange={(e) => setCivility(e.target.value)}
               >
                 <option value="default">- Choisir -</option>
