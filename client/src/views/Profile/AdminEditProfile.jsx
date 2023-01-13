@@ -123,8 +123,8 @@ const AdminEditProfile = () => {
                 onChange={(e) => setCivility(e.target.value)}
               >
                 <option value="default">- Choisir -</option>
-                <option value="male">male</option>
-                <option value="female">female</option>
+                <option value="male">Homme</option>
+                <option value="female">Femme</option>
               </select>
             </div>
             <div className="input-container">
