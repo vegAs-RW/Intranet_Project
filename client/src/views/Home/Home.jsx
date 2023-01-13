@@ -4,8 +4,6 @@ import { useSelector } from 'react-redux';
 // Import des composants
 import SignInForm from '../../components/SignInForm/SignInForm';
 import Welcome from '../../components/Welcome/Welcome'
-// Import style
-import "./Home.css";
 
 const Home = () => {
     // Import du store pour verifier si il y a le token de connexion

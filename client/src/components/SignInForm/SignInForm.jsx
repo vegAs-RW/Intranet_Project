@@ -48,14 +48,14 @@ const SignInForm = () => {
 
   return (
     <div className="login-container">
-      <div className="login-header">
-        <h1>Connexion</h1>
-        <div className="line"></div>
-        <p>
-          Pour vous connecter à l'intranet, entrez votre identifiant et mot de
-          passe
-        </p>
-      </div>
+
+      <p className="login-header">Connexion</p>
+      <div className="line"></div>
+      <p>
+        Pour vous connecter à l'intranet, entrez votre identifiant et mot de
+        passe
+      </p>
+
       <form action="" onSubmit={handleLogin}>
         <div className="input-container">
           <label htmlFor="email">Email</label>
