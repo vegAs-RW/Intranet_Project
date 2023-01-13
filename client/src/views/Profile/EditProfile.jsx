@@ -1,23 +1,30 @@
 import React from "react";
-// Import hook de react
-import { useState } from "react";
-// Import Axios pour requete API
-import axios from "axios";
-// Import hook de react-redux
+// Import des differents hook
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// Import reducer
-import { setAllUser } from "../../features/userSlice";
+import { useNavigate } from "react-router-dom";
+// Import axios pour requete API
+import axios from "axios";
+// Import des reducers
+import { setUser, setAllUser } from "../../features/userSlice";
 // Import style
-import "./editProfile.css";
+import "./profile.css";
 
-
-const AdminEditProfile = () => {
-
-  const dispatch = useDispatch();
-  // Récupération des stores 
-  const connectedUserData = useSelector((state) => state.user.user);
+const Editprofile = () => {
+  // Import du store pour verifier si il y a le token de connexion
   const userToken = useSelector((state) => state.user.token);
-  const userId = useSelector((state) => state.user.userToModify);
+  const user = useSelector((state) => state.user.user);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  // Redirection si pas de token
+  useEffect(() => {
+    if (!userToken) {
+      navigate("/");
+    }
+  }, [userToken]);
+
   // Création de state local avec le hook useState pour stocker les value du formulaire
   const [civility, setCivility] = useState("");
   const [category, setCategory] = useState("");
@@ -32,13 +39,12 @@ const AdminEditProfile = () => {
   const [country, setCountry] = useState("");
   const [photo, setPhoto] = useState("");
 
-
-  // Fonction avec appel API pour modifier un user à la soumission du formulaire
-  const handleSubmitAdmin = (e) => {
+  // Fonction pour modifier les informations du user
+  const handleSubmit = (e) => {
     e.preventDefault();
     axios({
       method: "put",
-      url: `http://localhost:9000/api/collaborateurs/${userId}`,
+      url: `http://localhost:9000/api/collaborateurs/${user.id}`,
       headers: {
         Authorization: `Bearer ${userToken}`,
       },
@@ -56,8 +62,24 @@ const AdminEditProfile = () => {
         service: category,
       },
     })
+      .then((res) => {
+        console.log(res);
+        // Une fois les modifs enregistrées, on referesh le store User
+        axios({
+          method: "get",
+          url: `http://localhost:9000/api/collaborateurs/${user.id}`,
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        })
+          .then((res) => {
+            console.log(res);
+            dispatch(setUser(res.data));
+          })
+          .catch((err) => console.log(err));
+      })
       .then(() => {
-        // Une fois requete valider on refresh le store AllUser
+        // On refresh le store AllUser
         axios({
           method: "get",
           url: `http://localhost:9000/api/collaborateurs`,
@@ -85,7 +107,7 @@ const AdminEditProfile = () => {
         setCountry("");
         setPhoto("");
         document.querySelector(".validation").innerHTML =
-          "Les information ont été modifiés avec succés !";
+          "Vos information ont été modifiés avec succés !";
       })
       .catch((err) => {
         console.log(err);
@@ -94,12 +116,11 @@ const AdminEditProfile = () => {
 
   return (
     <>
-      {connectedUserData.isAdmin && (
+      {user && user.id && (
         <>
-          <h1>Modifier le profil (admin)</h1>
-
+          <h1 style={{ textAlign: "center" }}>Modifier mon profil</h1>
           <div className="line"></div>
-          <form action="" onSubmit={handleSubmitAdmin}>
+          <form action="" onSubmit={handleSubmit}>
             <p className="validation"></p>
             <div className="input-container">
               <label htmlFor="civility">* Civilité :</label>
@@ -225,4 +246,4 @@ const AdminEditProfile = () => {
   );
 };
 
-export default AdminEditProfile;
+export default Editprofile;

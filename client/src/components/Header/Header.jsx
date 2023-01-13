@@ -38,7 +38,7 @@ const Header = () => {
           </Link>
 
           {connectedUserData.isAdmin && (
-            <Link to="/addworker">
+            <Link to="/add-profile">
               <button className="header-btn">
                 <i className="fa-solid fa-list"></i>
                 Ajouter

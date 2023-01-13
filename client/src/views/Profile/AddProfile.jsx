@@ -1,30 +1,19 @@
 import React from "react";
-// Import des differents hook
+// Import hook
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 // Import axios pour requete API
 import axios from "axios";
-// Import des reducers
-import { setUser, setAllUser } from "../../features/userSlice";
+// Import du reducer
+import { setAllUser } from "../../features/userSlice";
 // Import style
-import "./editProfile.css";
+import "./profile.css";
 
-const EditProfile = () => {
-  // Import du store pour verifier si il y a le token de connexion
-  const userToken = useSelector((state) => state.user.token);
-  const user = useSelector((state) => state.user.user);
-
-  const navigate = useNavigate();
+const AddProfile = ({ }) => {
   const dispatch = useDispatch();
-
-  // Redirection si pas de token
-  useEffect(() => {
-    if (!userToken) {
-      navigate("/");
-    }
-  }, [userToken]);
-
+  // Import des stores globaux
+  const userToken = useSelector((state) => state.user.token);
+  const userId = useSelector((state) => state.user.user.id);
   // Création de state local avec le hook useState pour stocker les value du formulaire
   const [civility, setCivility] = useState("");
   const [category, setCategory] = useState("");
@@ -39,12 +28,12 @@ const EditProfile = () => {
   const [country, setCountry] = useState("");
   const [photo, setPhoto] = useState("");
 
-  // Fonction pour modifier les informations du user
-  const handleSubmit = (e) => {
+  // Fonction pour créé un nouveau user
+  const handleCreateNewUser = (e) => {
     e.preventDefault();
     axios({
-      method: "put",
-      url: `http://localhost:9000/api/collaborateurs/${user.id}`,
+      method: "post",
+      url: `http://localhost:9000/api/collaborateurs/`,
       headers: {
         Authorization: `Bearer ${userToken}`,
       },
@@ -52,8 +41,8 @@ const EditProfile = () => {
         gender: civility,
         firstname: name,
         lastname,
-        email,
         password,
+        email,
         phone,
         birthdate,
         city,
@@ -64,22 +53,7 @@ const EditProfile = () => {
     })
       .then((res) => {
         console.log(res);
-        // Une fois les modifs enregistrées, on referesh le store User
-        axios({
-          method: "get",
-          url: `http://localhost:9000/api/collaborateurs/${user.id}`,
-          headers: {
-            Authorization: `Bearer ${userToken}`,
-          },
-        })
-          .then((res) => {
-            console.log(res);
-            dispatch(setUser(res.data));
-          })
-          .catch((err) => console.log(err));
-      })
-      .then(() => {
-        // On refresh le store AllUser
+        // Une fois le user créé on refresh le store AllUser avec la nouvelle data
         axios({
           method: "get",
           url: `http://localhost:9000/api/collaborateurs`,
@@ -92,8 +66,8 @@ const EditProfile = () => {
           })
           .catch((err) => console.log(err));
       })
-      // On vide les champs du formulaire en remetant le state local sur valeur initiale
       .then(() => {
+        // On vide le state local une fois le formulaire soumis
         setCivility("");
         setCategory("");
         setLastname("");
@@ -107,7 +81,7 @@ const EditProfile = () => {
         setCountry("");
         setPhoto("");
         document.querySelector(".validation").innerHTML =
-          "Vos information ont été modifiés avec succés !";
+          "Collaborateur créé avec succés !";
       })
       .catch((err) => {
         console.log(err);
@@ -116,11 +90,11 @@ const EditProfile = () => {
 
   return (
     <>
-      {user && user.id && (
+      {userId && (
         <>
-          <h1 style={{ textAlign: "center" }}>Modifier mon profil</h1>
+          <h1>Ajouter un collaborateur</h1>
           <div className="line"></div>
-          <form action="" onSubmit={handleSubmit}>
+          <form action="" onSubmit={handleCreateNewUser}>
             <p className="validation"></p>
             <div className="input-container">
               <label htmlFor="civility">* Civilité :</label>
@@ -238,7 +212,7 @@ const EditProfile = () => {
                 onChange={(e) => setPhoto(e.target.value)}
               />
             </div>
-            <input type="submit" className="form-btn" value="Modifier" />
+            <input type="submit" className="form-btn" value="Ajouter" />
           </form>
         </>
       )}
@@ -246,4 +220,4 @@ const EditProfile = () => {
   );
 };
 
-export default EditProfile;
+export default AddProfile;

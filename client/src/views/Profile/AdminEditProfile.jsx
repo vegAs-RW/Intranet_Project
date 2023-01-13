@@ -1,19 +1,23 @@
 import React from "react";
-// Import hook
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-// Import axios pour requete API
+// Import hook de react
+import { useState } from "react";
+// Import Axios pour requete API
 import axios from "axios";
-// Import du reducer
+// Import hook de react-redux
+import { useDispatch, useSelector } from "react-redux";
+// Import reducer
 import { setAllUser } from "../../features/userSlice";
 // Import style
-import "../EditProfile/editProfile.css";
+import "./profile.css";
 
-const AddWorker = ({}) => {
+
+const AdminEditProfile = () => {
+
   const dispatch = useDispatch();
-  // Import des stores globaux
+  // Récupération des stores 
+  const connectedUserData = useSelector((state) => state.user.user);
   const userToken = useSelector((state) => state.user.token);
-  const userId = useSelector((state) => state.user.user.id);
+  const userId = useSelector((state) => state.user.userToModify);
   // Création de state local avec le hook useState pour stocker les value du formulaire
   const [civility, setCivility] = useState("");
   const [category, setCategory] = useState("");
@@ -28,12 +32,13 @@ const AddWorker = ({}) => {
   const [country, setCountry] = useState("");
   const [photo, setPhoto] = useState("");
 
-  // Fonction pour créé un nouveau user
-  const handleCreateNewUser = (e) => {
+
+  // Fonction avec appel API pour modifier un user à la soumission du formulaire
+  const handleSubmitAdmin = (e) => {
     e.preventDefault();
     axios({
-      method: "post",
-      url: `http://localhost:9000/api/collaborateurs/`,
+      method: "put",
+      url: `http://localhost:9000/api/collaborateurs/${userId}`,
       headers: {
         Authorization: `Bearer ${userToken}`,
       },
@@ -41,8 +46,8 @@ const AddWorker = ({}) => {
         gender: civility,
         firstname: name,
         lastname,
-        password,
         email,
+        password,
         phone,
         birthdate,
         city,
@@ -51,9 +56,8 @@ const AddWorker = ({}) => {
         service: category,
       },
     })
-      .then((res) => {
-        console.log(res);
-        // Une fois le user créé on refresh le store AllUser avec la nouvelle data
+      .then(() => {
+        // Une fois requete valider on refresh le store AllUser
         axios({
           method: "get",
           url: `http://localhost:9000/api/collaborateurs`,
@@ -66,8 +70,8 @@ const AddWorker = ({}) => {
           })
           .catch((err) => console.log(err));
       })
+      // On vide les champs du formulaire en remetant le state local sur valeur initiale
       .then(() => {
-        // On vide le state local une fois le formulaire soumis
         setCivility("");
         setCategory("");
         setLastname("");
@@ -81,7 +85,7 @@ const AddWorker = ({}) => {
         setCountry("");
         setPhoto("");
         document.querySelector(".validation").innerHTML =
-          "Collaborateur créé avec succés !";
+          "Les information ont été modifiés avec succés !";
       })
       .catch((err) => {
         console.log(err);
@@ -90,11 +94,12 @@ const AddWorker = ({}) => {
 
   return (
     <>
-      {userId && (
+      {connectedUserData.isAdmin && (
         <>
-          <h1>Ajouter un collaborateur</h1>
+          <h1>Modifier le profil (admin)</h1>
+
           <div className="line"></div>
-          <form action="" onSubmit={handleCreateNewUser}>
+          <form action="" onSubmit={handleSubmitAdmin}>
             <p className="validation"></p>
             <div className="input-container">
               <label htmlFor="civility">* Civilité :</label>
@@ -212,7 +217,7 @@ const AddWorker = ({}) => {
                 onChange={(e) => setPhoto(e.target.value)}
               />
             </div>
-            <input type="submit" className="form-btn" value="Ajouter" />
+            <input type="submit" className="form-btn" value="Modifier" />
           </form>
         </>
       )}
@@ -220,4 +225,4 @@ const AddWorker = ({}) => {
   );
 };
 
-export default AddWorker;
+export default AdminEditProfile;

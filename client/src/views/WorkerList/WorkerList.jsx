@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 // Import composant
-import Card from "../Card/Card";
+import Card from "../../components/Card/Card";
 // Import style
 import "./workerList.css";
 
