@@ -38,6 +38,16 @@ const Card = ({
     );
   };
 
+  const getFrenchBirthday = () => {
+
+
+    const date = new Date(birthdate);
+    const day = date.getDate();
+    const month = date.toLocaleString('default', { month: 'long' });
+    return `Anniversaire : ${day} ${month}`;
+
+  }
+
   // Fonction pour que l'admin puisse supprimer un user
   const deleteUser = () => {
     axios({
@@ -106,17 +116,22 @@ const Card = ({
 
         <div className="card_line">
           <i className="fa-solid fa-envelope"></i>
-          {email}
+          <a href={"mailto:" + email}          >
+            {email}
+
+          </a>
         </div>
 
         <div className="card_line">
           <i className="fa-solid fa-phone-flip"></i>
-          {phone}
+          <a href={"tel:" + phone}>
+            {phone}
+          </a>
         </div>
 
         <div className="card_line">
           <i className="fa-solid fa-cake-candles"></i>
-          {birthdate}
+          {getFrenchBirthday()}
         </div>
 
         <div className="card_service" style={getServicesColor()}>

@@ -8,9 +8,9 @@ import axios from "axios";
 // Import des reducers
 import { setUser, setAllUser } from "../../features/userSlice";
 // Import style
-import "./editProfile.css";
+import "./profile.css";
 
-const EditProfile = () => {
+const Editprofile = () => {
   // Import du store pour verifier si il y a le token de connexion
   const userToken = useSelector((state) => state.user.token);
   const user = useSelector((state) => state.user.user);
@@ -256,4 +256,4 @@ const EditProfile = () => {
   );
 };
 
-export default EditProfile;
+export default Editprofile;

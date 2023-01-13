@@ -1,15 +1,19 @@
 .login-container {
     border: 1px solid rgb(114, 110, 110);
-    width: 60%;
-    margin: 50px auto;
+    width: 55%;
+    margin: 4rem auto;
     color: black;
     background-color: #fff9f9;
-    padding: 2rem 1rem;
+    padding: 2rem 4rem;
+
+    text-align: left;
 
 }
 
-.login-header p {
+.login-header {
+
     font-weight: bold;
+    font-size: 2.5em;
 }
 
 .line {

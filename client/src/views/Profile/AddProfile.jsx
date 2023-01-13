@@ -1,25 +1,19 @@
 import React from "react";
-// Import hook de react
+// Import hook
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-// Import Axios pour requete API
-import axios from "axios";
-// Import hook de react-redux
 import { useDispatch, useSelector } from "react-redux";
-// Import reducer
+// Import axios pour requete API
+import axios from "axios";
+// Import du reducer
 import { setAllUser } from "../../features/userSlice";
 // Import style
-import "./editProfile.css";
+import "./profile.css";
 
-
-const AdminEditProfile = () => {
-
-  const navigate = useNavigate();
+const AddProfile = ({ }) => {
   const dispatch = useDispatch();
-  // Récupération des stores 
-  const user = useSelector((state) => state.user.user);
+  // Import des stores globaux
   const userToken = useSelector((state) => state.user.token);
-  const userId = useSelector((state) => state.user.userToModify);
+  const userId = useSelector((state) => state.user.user.id);
   // Création de state local avec le hook useState pour stocker les value du formulaire
   const [civility, setCivility] = useState("");
   const [category, setCategory] = useState("");
@@ -33,22 +27,13 @@ const AdminEditProfile = () => {
   const [city, setCity] = useState("");
   const [country, setCountry] = useState("");
   const [photo, setPhoto] = useState("");
-  const [adminPrivilege, setAdminPrivilege] = useState(false);
 
-
-  // Redirection si pas de token
-  useEffect(() => {
-    if (!userToken) {
-      navigate("/");
-    }
-  }, [userToken]);
-
-  // Fonction avec appel API pour modifier un user à la soumission du formulaire
-  const handleSubmitAdmin = (e) => {
+  // Fonction pour créé un nouveau user
+  const handleCreateNewUser = (e) => {
     e.preventDefault();
     axios({
-      method: "put",
-      url: `http://localhost:9000/api/collaborateurs/${userId}`,
+      method: "post",
+      url: `http://localhost:9000/api/collaborateurs/`,
       headers: {
         Authorization: `Bearer ${userToken}`,
       },
@@ -56,19 +41,19 @@ const AdminEditProfile = () => {
         gender: civility,
         firstname: name,
         lastname,
-        email,
         password,
+        email,
         phone,
         birthdate,
         city,
         country,
         photo,
         service: category,
-        isAdmin: adminPrivilege
       },
     })
-      .then(() => {
-        // Une fois requete valider on refresh le store AllUser
+      .then((res) => {
+        console.log(res);
+        // Une fois le user créé on refresh le store AllUser avec la nouvelle data
         axios({
           method: "get",
           url: `http://localhost:9000/api/collaborateurs`,
@@ -81,8 +66,8 @@ const AdminEditProfile = () => {
           })
           .catch((err) => console.log(err));
       })
-      // On vide les champs du formulaire en remetant le state local sur valeur initiale
       .then(() => {
+        // On vide le state local une fois le formulaire soumis
         setCivility("");
         setCategory("");
         setLastname("");
@@ -96,28 +81,24 @@ const AdminEditProfile = () => {
         setCountry("");
         setPhoto("");
         document.querySelector(".validation").innerHTML =
-          "Les information ont été modifiés avec succés !";
+          "Collaborateur créé avec succés !";
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-
   return (
     <>
-      {user && user.isAdmin &&(
+      {userId && (
         <>
-          <h1>Modifier le profil (admin)</h1>
-
+          <h1>Ajouter un collaborateur</h1>
           <div className="line"></div>
-          <div className="form-container">
-          <form action="" onSubmit={handleSubmitAdmin}>
+          <form action="" onSubmit={handleCreateNewUser}>
             <p className="validation"></p>
             <div className="input-container">
               <label htmlFor="civility">* Civilité :</label>
               <select
-                required
                 name="civility"
                 id="civility"
                 onChange={(e) => setCivility(e.target.value)}
@@ -130,7 +111,6 @@ const AdminEditProfile = () => {
             <div className="input-container">
               <label htmlFor="category">* Catégorie :</label>
               <select
-                required
                 name="category"
                 id="category"
                 onChange={(e) => setCategory(e.target.value)}
@@ -144,7 +124,6 @@ const AdminEditProfile = () => {
             <div className="input-container">
               <label htmlFor="lastname">* Nom :</label>
               <input
-              required
                 type="text"
                 id="lastname"
                 value={lastname}
@@ -154,7 +133,6 @@ const AdminEditProfile = () => {
             <div className="input-container">
               <label htmlFor="name">* Prénom :</label>
               <input
-              required
                 type="text"
                 id="name"
                 value={name}
@@ -164,7 +142,6 @@ const AdminEditProfile = () => {
             <div className="input-container">
               <label htmlFor="email">* Email :</label>
               <input
-              required
                 type="email"
                 id="email"
                 value={email}
@@ -201,7 +178,6 @@ const AdminEditProfile = () => {
             <div className="input-container">
               <label htmlFor="birthdate">* Date de naissance :</label>
               <input
-              required
                 type="date"
                 id="birthdate"
                 value={birthdate}
@@ -212,7 +188,6 @@ const AdminEditProfile = () => {
             <div className="input-container">
               <label htmlFor="city">* Ville :</label>
               <input
-              required
                 type="text"
                 id="city"
                 value={city}
@@ -222,7 +197,6 @@ const AdminEditProfile = () => {
             <div className="input-container">
               <label htmlFor="country">* Pays :</label>
               <input
-              required
                 type="text"
                 id="country"
                 value={country}
@@ -238,24 +212,12 @@ const AdminEditProfile = () => {
                 onChange={(e) => setPhoto(e.target.value)}
               />
             </div>
-            <div className="input-container">
-              <label htmlFor="adminPrivilege">* Administrateur ? :</label>
-              <input type="checkbox" name="adminPrivilege"  id="adminPrivilege" onChange={(e) => {
-                if (adminPrivilege === false) {
-                  setAdminPrivilege(true)
-                }
-                if (adminPrivilege === true) {
-                  setAdminPrivilege(false)
-                }
-              }}></input>
-            </div>
-            <input type="submit" className="form-btn" value="Modifier" />
+            <input type="submit" className="form-btn" value="Ajouter" />
           </form>
-          </div>
         </>
       )}
     </>
   );
 };
 
-export default AdminEditProfile;
+export default AddProfile;

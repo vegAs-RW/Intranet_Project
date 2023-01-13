@@ -1,22 +1,25 @@
 import React from "react";
-// Import hook
+// Import hook de react
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-// Import axios pour requete API
+// Import Axios pour requete API
 import axios from "axios";
-// Import du reducer
+// Import hook de react-redux
+import { useDispatch, useSelector } from "react-redux";
+// Import reducer
 import { setAllUser } from "../../features/userSlice";
 // Import style
-import "../EditProfile/editProfile.css";
+import "./profile.css";
 
-const AddWorker = ({}) => {
+
+const AdminEditProfile = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // Import des stores globaux
-  const userToken = useSelector((state) => state.user.token);
+  // Récupération des stores 
   const user = useSelector((state) => state.user.user);
+  const userToken = useSelector((state) => state.user.token);
+  const userId = useSelector((state) => state.user.userToModify);
   // Création de state local avec le hook useState pour stocker les value du formulaire
   const [civility, setCivility] = useState("");
   const [category, setCategory] = useState("");
@@ -40,13 +43,12 @@ const AddWorker = ({}) => {
     }
   }, [userToken]);
 
-
-  // Fonction pour créé un nouveau user
-  const handleCreateNewUser = (e) => {
+  // Fonction avec appel API pour modifier un user à la soumission du formulaire
+  const handleSubmitAdmin = (e) => {
     e.preventDefault();
     axios({
-      method: "post",
-      url: `http://localhost:9000/api/collaborateurs/`,
+      method: "put",
+      url: `http://localhost:9000/api/collaborateurs/${userId}`,
       headers: {
         Authorization: `Bearer ${userToken}`,
       },
@@ -54,8 +56,8 @@ const AddWorker = ({}) => {
         gender: civility,
         firstname: name,
         lastname,
-        password,
         email,
+        password,
         phone,
         birthdate,
         city,
@@ -65,9 +67,8 @@ const AddWorker = ({}) => {
         isAdmin: adminPrivilege
       },
     })
-      .then((res) => {
-        console.log(res);
-        // Une fois le user créé on refresh le store AllUser avec la nouvelle data
+      .then(() => {
+        // Une fois requete valider on refresh le store AllUser
         axios({
           method: "get",
           url: `http://localhost:9000/api/collaborateurs`,
@@ -80,8 +81,8 @@ const AddWorker = ({}) => {
           })
           .catch((err) => console.log(err));
       })
+      // On vide les champs du formulaire en remetant le state local sur valeur initiale
       .then(() => {
-        // On vide le state local une fois le formulaire soumis
         setCivility("");
         setCategory("");
         setLastname("");
@@ -95,28 +96,28 @@ const AddWorker = ({}) => {
         setCountry("");
         setPhoto("");
         document.querySelector(".validation").innerHTML =
-          "Collaborateur créé avec succés !";
+          "Les information ont été modifiés avec succés !";
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  
 
   return (
     <>
-      {user && user.id &&(
+      {user && user.isAdmin &&(
         <>
-          <h1>Ajouter un collaborateur</h1>
+          <h1>Modifier le profil (admin)</h1>
+
           <div className="line"></div>
           <div className="form-container">
-          <form action="" onSubmit={handleCreateNewUser}>
+          <form action="" onSubmit={handleSubmitAdmin}>
             <p className="validation"></p>
             <div className="input-container">
               <label htmlFor="civility">* Civilité :</label>
               <select
-              required
+                required
                 name="civility"
                 id="civility"
                 onChange={(e) => setCivility(e.target.value)}
@@ -129,7 +130,7 @@ const AddWorker = ({}) => {
             <div className="input-container">
               <label htmlFor="category">* Catégorie :</label>
               <select
-              required
+                required
                 name="category"
                 id="category"
                 onChange={(e) => setCategory(e.target.value)}
@@ -173,7 +174,6 @@ const AddWorker = ({}) => {
             <div className="input-container">
               <label htmlFor="password">Mot de passe :</label>
               <input
-              
                 type="password"
                 id="password"
                 value={password}
@@ -183,7 +183,6 @@ const AddWorker = ({}) => {
             <div className="input-container">
               <label htmlFor="password-confirm">Confirmation :</label>
               <input
-              
                 type="password"
                 id="password-confirm"
                 value={confirmPassword}
@@ -193,7 +192,6 @@ const AddWorker = ({}) => {
             <div className="input-container">
               <label htmlFor="phone">Téléphone :</label>
               <input
-              
                 type="text"
                 id="phone"
                 value={phone}
@@ -251,7 +249,7 @@ const AddWorker = ({}) => {
                 }
               }}></input>
             </div>
-            <input type="submit" className="form-btn" value="Ajouter" />
+            <input type="submit" className="form-btn" value="Modifier" />
           </form>
           </div>
         </>
@@ -260,4 +258,4 @@ const AddWorker = ({}) => {
   );
 };
 
-export default AddWorker;
+export default AdminEditProfile;

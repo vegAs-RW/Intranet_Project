@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 // Import composant
-import Card from "../Card/Card";
+import Card from "../../components/Card/Card";
 // Import style
 import "./workerList.css";
 
@@ -22,29 +22,36 @@ const WorkerList = () => {
     }
   }, [isLogged]);
 
-  // State locale pour filtre de recherche
+  // State locale pour les inputs du filtre de recherche
   const [searchQuery, setSearchQuery] = useState("");
   const [searchBy, setSearchBy] = useState("name");
   const [selectedWorkService, setSelectedWorkService] = useState("default");
 
+  //fonction qui renvoie la liste des collaborateur filtré
   const returnFiltredList = () => {
+
+    // les donné sont récupéré sur la page home si elle sont absentes il faut retourner sur home 
     if (!allUser) {
       return <> nous rencontrons un problème,merci de rafraichir la page </>;
     }
 
+
     let filtredUser = allUser;
 
+    // on filtre une premiere fois selon le service
     if (selectedWorkService != "default") {
       filtredUser = filtredUser.filter(
         (user) => user.service.toLowerCase() === selectedWorkService
       );
     }
 
+
+    // on filtre une seconde fois selon le champs de recherche et la valeur du dropdown associé
     if (searchQuery !== "") {
       if (searchBy === "name") {
         filtredUser = filtredUser.filter(
           (user) =>
-            user.firstname.toLowerCase().includes(searchQuery) ||
+            user.firstname.toLowerCase().includes(searchQuery.toLowerCase()) ||
             user.lastname.toLowerCase().includes(searchQuery.toLowerCase())
         );
       }
@@ -52,17 +59,18 @@ const WorkerList = () => {
       if (searchBy === "location") {
         filtredUser = filtredUser.filter(
           (user) =>
-            user.city.toLowerCase().includes(searchQuery) ||
+            user.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
             user.country.toLowerCase().includes(searchQuery.toLowerCase())
         );
       }
     }
 
-
+    // si le tableau est vide on retourne aucun resultat 
     if (!filtredUser[0]) {
       return <>Aucun résultat trouvé</>
     }
 
+    // on affiche la card de tout les users n'ayant pas été filtré 
     return filtredUser.map((user, Key) =>
       <div key={Key} className="user_table_card" >
 
