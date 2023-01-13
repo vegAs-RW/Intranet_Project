@@ -120,11 +120,13 @@ const EditProfile = () => {
         <>
           <h1 style={{ textAlign: "center" }}>Modifier mon profil</h1>
           <div className="line"></div>
+          <div className="form-container">
           <form action="" onSubmit={handleSubmit}>
             <p className="validation"></p>
             <div className="input-container">
               <label htmlFor="civility">* Civilité :</label>
               <select
+              required
                 name="civility"
                 id="civility"
                 onChange={(e) => setCivility(e.target.value)}
@@ -137,6 +139,7 @@ const EditProfile = () => {
             <div className="input-container">
               <label htmlFor="category">* Catégorie :</label>
               <select
+              required
                 name="category"
                 id="category"
                 onChange={(e) => setCategory(e.target.value)}
@@ -150,6 +153,7 @@ const EditProfile = () => {
             <div className="input-container">
               <label htmlFor="lastname">* Nom :</label>
               <input
+              required
                 type="text"
                 id="lastname"
                 value={lastname}
@@ -159,6 +163,7 @@ const EditProfile = () => {
             <div className="input-container">
               <label htmlFor="name">* Prénom :</label>
               <input
+              required
                 type="text"
                 id="name"
                 value={name}
@@ -168,6 +173,7 @@ const EditProfile = () => {
             <div className="input-container">
               <label htmlFor="email">* Email :</label>
               <input
+              required
                 type="email"
                 id="email"
                 value={email}
@@ -204,6 +210,7 @@ const EditProfile = () => {
             <div className="input-container">
               <label htmlFor="birthdate">* Date de naissance :</label>
               <input
+              required
                 type="date"
                 id="birthdate"
                 value={birthdate}
@@ -214,6 +221,7 @@ const EditProfile = () => {
             <div className="input-container">
               <label htmlFor="city">* Ville :</label>
               <input
+              required
                 type="text"
                 id="city"
                 value={city}
@@ -223,6 +231,7 @@ const EditProfile = () => {
             <div className="input-container">
               <label htmlFor="country">* Pays :</label>
               <input
+              required
                 type="text"
                 id="country"
                 value={country}
@@ -240,6 +249,7 @@ const EditProfile = () => {
             </div>
             <input type="submit" className="form-btn" value="Modifier" />
           </form>
+          </div>
         </>
       )}
     </>

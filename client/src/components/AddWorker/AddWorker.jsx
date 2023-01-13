@@ -110,11 +110,13 @@ const AddWorker = ({}) => {
         <>
           <h1>Ajouter un collaborateur</h1>
           <div className="line"></div>
+          <div className="form-container">
           <form action="" onSubmit={handleCreateNewUser}>
             <p className="validation"></p>
             <div className="input-container">
               <label htmlFor="civility">* Civilité :</label>
               <select
+              required
                 name="civility"
                 id="civility"
                 onChange={(e) => setCivility(e.target.value)}
@@ -127,6 +129,7 @@ const AddWorker = ({}) => {
             <div className="input-container">
               <label htmlFor="category">* Catégorie :</label>
               <select
+              required
                 name="category"
                 id="category"
                 onChange={(e) => setCategory(e.target.value)}
@@ -140,6 +143,7 @@ const AddWorker = ({}) => {
             <div className="input-container">
               <label htmlFor="lastname">* Nom :</label>
               <input
+              required
                 type="text"
                 id="lastname"
                 value={lastname}
@@ -149,6 +153,7 @@ const AddWorker = ({}) => {
             <div className="input-container">
               <label htmlFor="name">* Prénom :</label>
               <input
+              required
                 type="text"
                 id="name"
                 value={name}
@@ -158,6 +163,7 @@ const AddWorker = ({}) => {
             <div className="input-container">
               <label htmlFor="email">* Email :</label>
               <input
+              required
                 type="email"
                 id="email"
                 value={email}
@@ -167,6 +173,7 @@ const AddWorker = ({}) => {
             <div className="input-container">
               <label htmlFor="password">Mot de passe :</label>
               <input
+              
                 type="password"
                 id="password"
                 value={password}
@@ -176,6 +183,7 @@ const AddWorker = ({}) => {
             <div className="input-container">
               <label htmlFor="password-confirm">Confirmation :</label>
               <input
+              
                 type="password"
                 id="password-confirm"
                 value={confirmPassword}
@@ -185,6 +193,7 @@ const AddWorker = ({}) => {
             <div className="input-container">
               <label htmlFor="phone">Téléphone :</label>
               <input
+              
                 type="text"
                 id="phone"
                 value={phone}
@@ -194,6 +203,7 @@ const AddWorker = ({}) => {
             <div className="input-container">
               <label htmlFor="birthdate">* Date de naissance :</label>
               <input
+              required
                 type="date"
                 id="birthdate"
                 value={birthdate}
@@ -204,6 +214,7 @@ const AddWorker = ({}) => {
             <div className="input-container">
               <label htmlFor="city">* Ville :</label>
               <input
+              required
                 type="text"
                 id="city"
                 value={city}
@@ -213,6 +224,7 @@ const AddWorker = ({}) => {
             <div className="input-container">
               <label htmlFor="country">* Pays :</label>
               <input
+              required
                 type="text"
                 id="country"
                 value={country}
@@ -241,6 +253,7 @@ const AddWorker = ({}) => {
             </div>
             <input type="submit" className="form-btn" value="Ajouter" />
           </form>
+          </div>
         </>
       )}
     </>
