@@ -2,6 +2,7 @@ import React from "react";
 // Import hook
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 // Import axios pour requete API
 import axios from "axios";
 // Import du reducer
@@ -27,6 +28,9 @@ const AddWorker = ({}) => {
   const [city, setCity] = useState("");
   const [country, setCountry] = useState("");
   const [photo, setPhoto] = useState("");
+  const [adminPrivilege, setAdminPrivilege] = useState(false);
+
+
 
   // Fonction pour créé un nouveau user
   const handleCreateNewUser = (e) => {
@@ -49,6 +53,7 @@ const AddWorker = ({}) => {
         country,
         photo,
         service: category,
+        isAdmin: adminPrivilege
       },
     })
       .then((res) => {
@@ -87,6 +92,13 @@ const AddWorker = ({}) => {
         console.log(err);
       });
   };
+
+  // Redirection si pas de token
+  useEffect(() => {
+    if (!userToken) {
+      navigate("/");
+    }
+  }, [userToken]);
 
   return (
     <>
@@ -211,6 +223,17 @@ const AddWorker = ({}) => {
                 value={photo}
                 onChange={(e) => setPhoto(e.target.value)}
               />
+            </div>
+            <div className="input-container">
+              <label htmlFor="adminPrivilege">* Administrateur ? :</label>
+              <input type="checkbox" name="adminPrivilege"  id="adminPrivilege" onChange={(e) => {
+                if (adminPrivilege === false) {
+                  setAdminPrivilege(true)
+                }
+                if (adminPrivilege === true) {
+                  setAdminPrivilege(false)
+                }
+              }}></input>
             </div>
             <input type="submit" className="form-btn" value="Ajouter" />
           </form>

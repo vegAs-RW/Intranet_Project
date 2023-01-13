@@ -1,6 +1,7 @@
 import React from "react";
 // Import hook de react
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 // Import Axios pour requete API
 import axios from "axios";
 // Import hook de react-redux
@@ -31,6 +32,7 @@ const AdminEditProfile = () => {
   const [city, setCity] = useState("");
   const [country, setCountry] = useState("");
   const [photo, setPhoto] = useState("");
+  const [adminPrivilege, setAdminPrivilege] = useState(false);
 
 
   // Fonction avec appel API pour modifier un user à la soumission du formulaire
@@ -54,6 +56,7 @@ const AdminEditProfile = () => {
         country,
         photo,
         service: category,
+        isAdmin: adminPrivilege
       },
     })
       .then(() => {
@@ -91,6 +94,13 @@ const AdminEditProfile = () => {
         console.log(err);
       });
   };
+
+  // Redirection si pas de token
+  useEffect(() => {
+    if (!userToken) {
+      navigate("/");
+    }
+  }, [userToken]);
 
   return (
     <>
@@ -216,6 +226,17 @@ const AdminEditProfile = () => {
                 value={photo}
                 onChange={(e) => setPhoto(e.target.value)}
               />
+            </div>
+            <div className="input-container">
+              <label htmlFor="adminPrivilege">* Administrateur ? :</label>
+              <input type="checkbox" name="adminPrivilege"  id="adminPrivilege" onChange={(e) => {
+                if (adminPrivilege === false) {
+                  setAdminPrivilege(true)
+                }
+                if (adminPrivilege === true) {
+                  setAdminPrivilege(false)
+                }
+              }}></input>
             </div>
             <input type="submit" className="form-btn" value="Modifier" />
           </form>
