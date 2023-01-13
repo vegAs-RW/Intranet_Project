@@ -108,6 +108,7 @@ const AdminEditProfile = () => {
                 id="civility"
                 onChange={(e) => setCivility(e.target.value)}
               >
+                <option value="default">- Choisir -</option>
                 <option value="male">male</option>
                 <option value="female">female</option>
               </select>
@@ -119,6 +120,7 @@ const AdminEditProfile = () => {
                 id="category"
                 onChange={(e) => setCategory(e.target.value)}
               >
+                <option value="default">- Choisir -</option>
                 <option value="Client">Client</option>
                 <option value="Marketing">Marketing</option>
                 <option value="Technique">Technique</option>
